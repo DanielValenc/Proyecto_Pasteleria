@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>Resumen de tu pastel 🎉</h2>
+<p>¡Aquí está el pastel que creaste! Si todo se ve bien, puedes proceder a confirmar.</p>
+
+<div class="summary-box">
+    <p><strong>Sabor:</strong> {{ flavor }}</p>
+    <p><strong>Forma:</strong> {{ shape }}</p>
+    <p><strong>Toppings:</strong> {{ topping }}</p>
+</div>
+
+<div class="buttons">
+    <button class="interactive-button" onclick="location.href='/'">Empezar de Nuevo</button>
+    <button class="interactive-button">Confirmar Orden</button>
+</div>
+{% endblock %}
