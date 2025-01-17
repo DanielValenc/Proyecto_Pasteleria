@@ -41,3 +41,6 @@ async def generate(request: Request, topping: str = Form(...), shape: str = Form
     prompt = f"A {shape} cake with {flavor} flavor and {topping} topping"
     generated_image = model(prompt)
     return templates.TemplateResponse("result.html", {"request": request, "image": generated_image, "prompt": prompt})
+
+if __name__ == "__main__":
+    app.run(host="0.0.0.0", port=5000)
