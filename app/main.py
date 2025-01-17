@@ -3,6 +3,7 @@ from fastapi.responses import HTMLResponse
 from fastapi.templating import Jinja2Templates
 from fastapi.staticfiles import StaticFiles
 from transformers import pipeline
+import uvicorn
 
 app = FastAPI()
 templates = Jinja2Templates(directory="app/templates")
@@ -43,4 +44,4 @@ async def generate(request: Request, topping: str = Form(...), shape: str = Form
     return templates.TemplateResponse("result.html", {"request": request, "image": generated_image, "prompt": prompt})
 
 if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=8000)
+    uvicorn.run(app, host="0.0.0.0", port=8000)
