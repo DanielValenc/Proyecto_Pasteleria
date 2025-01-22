@@ -5,27 +5,106 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/static/styles.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+   
     <title>Make Your Cake</title>
 </head>
+
 <body>
     <header>
         <nav class="navbar">
             <div class="logo">🎂 Make Your Cake</div>
-            <ul class="nav-links">
-                <li><a href="/">Home</a></li>
-                <li><a href="/step1/">Start</a></li>
-                <li><a href="/about/">About</a></li>
-            </ul>
         </nav>
     </header>
     <main>
-        <div class="content">
-            {% block content %}{% endblock %}
+        <div class="section">
+           <label>Detalle de pedido:</label>
         </div>
+    
+        <form id="cakeForm" name="Pedido" method="post" class="form-step">
+            <div class="section">
+                 <label >Número de porciones:    </label>
+                 <input type="number" id="porciones" name="porciones">
+            </div>
+
+            <div class="section">
+               <div id="grupoForma">
+                 <label >Forma del pastel:    </label>
+                 <input type="radio" id="forma-corazon" name="forma" value="corazón" >
+                 <label for="forma-corazon" class="radio-button">❤️</label>
+         
+                 <input type="radio" id="forma-cuadrado" name="forma" value="cuadrado" >
+                 <label for="forma-cuadrado" class="radio-button">⬜</label>
+         
+                 <input type="radio" id="forma-circulo" name="forma" value="círculo" >
+                 <label for="forma-circulo" class="radio-button">⚪</label>
+               </div>
+            </div>
+
+            <div class="section">
+                 <label >Sabor del pastel:    </label>
+                 <select name="sabor" id="sabor" class="styled-select">
+                     <option value="Chocolate">Chocolate</option>
+                     <option value="Vainilla">Vainilla</option>
+                     <option value="wRed Velvet">Red Velvet</option>
+                 </select>
+            </div>
+
+            <div class="section">
+                <label >Topping:    </label>
+                <select name="topping" id="topping" class="styled-select">
+                    <option value="chocolate chips">🍫 Chispas de Chocolate</option>
+                    <option value="fruit slices">🍓 Pedazos de Fruta</option>
+                    <option value="whipped cream">🍦 Crema Pastelera</option>
+                </select>
+            </div>
+
+            <div class="section">
+                <label >Temática:    </label>
+                <input type="text" id="tematica" name="tematica">
+            </div>
+
+            <div class="section">
+                <label >Colores:    </label>
+                <input type="text" id="color" name="color">
+            </div>
+
+            <div class="section">
+               <label >Estilo:    </label>
+                 <div id="grupoEstilo">
+                    <input type="radio" id="estilo-moderno" name="estilo" value="moderno" >
+                    <label for="estilo-moderno" class="radio-button">Moderno</label>
+                    <input type="radio" id="estilo-tradicional" name="estilo" value="tradicional" >
+                    <label for="estilo-tradicional" class="radio-button">Tradicional</label>
+                    <input type="radio" id="estilo-rustico" name="estilo" value="rustico" >
+                    <label for="estilo-rustico" class="radio-button"></label>Rústico</label>
+                    <input type="radio" id="estilo-elgante" name="estilo" value="elegante" >
+                    <label for="estilo-elegante" class="radio-button">Elegante</label>
+                    
+                 </div> 
+            </div>
+
+            <div class="section"> 
+                <label >Decoraciones:    </label>
+                <select name="decoracion" id="decoracion" class="styled-select">
+                   <option value="Flores">Flores</option>
+                   <option value="fondant">Fondant</option>
+                   <option value="crema pastelera">Crema Pastelera</option>
+                   <option value="ninguno">Ninguno</option>
+                </select>
+            </div>
+
+            <div class="section">
+                <label >Texto o mensaje:    </label>
+                <input type="text" id="mensage" name="mensaje">
+            </div>
+            
+            <button type="button" id="submitBtn">Generar Pastel</button>
+        </form>
+
     </main>
     <footer>
         <p>Make Your Cake © 2025 | Designed with ❤️</p>
     </footer>
+    <script src="/static/script.js"></script>
 </body>
 </html>
