@@ -25,7 +25,7 @@ async def generate_cake_image(request: CakeCustomizationRequest):
     """
     # Construir el prompt
     prompt = (
-        f"Genera un pastel de {request.personalizacion} de sabor {request.sabores}, con forma {request.forma} y decorado con {request.adornos}."
+        f"Haz un pastel de {request.personalizacion} con  sabor {request.sabores},la forma del paste es {request.forma} y el decorado externo con {request.adornos}."
     )
 
     # Configuración del payload para la API externa
