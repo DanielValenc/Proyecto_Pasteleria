@@ -2,7 +2,11 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+<<<<<<< HEAD
       <module fileurl="file://$PROJECT_DIR$/.idea/ProyectoPasteleria.iml" filepath="$PROJECT_DIR$/.idea/ProyectoPasteleria.iml" />
+=======
+      <module fileurl="file://$PROJECT_DIR$/.idea/Projecto_Leonard.iml" filepath="$PROJECT_DIR$/.idea/Projecto_Leonard.iml" />
+>>>>>>> a61e7b0 (Conexion con la Api de Leonard codigo base Post/Get Funcionando desde Fastapi/Docs)
     </modules>
   </component>
 </project>
