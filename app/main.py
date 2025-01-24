@@ -40,16 +40,13 @@ async def generate(
     decoracion: str = Form(...),
     mensaje: str = Form(None)
     ):
+  
    
- # Imprimir los datos para verificar
-    print(f"Porciones: {porciones}, Forma: {forma}, Sabor: {sabor}, Topping: {topping}, "
-          f"Temática: {tematica}, Color: {color}, Estilo: {estilo}, Decoración: {decoracion}, Mensaje: {mensaje}")
-    
     # Crear el prompt basado en los datos del formulario
     prompt = (
-        f"A cake with {porciones} portions, in a {forma} shape, "
-        f"flavored with {sabor}, topped with {topping}, themed as {tematica}, "
-        f"colored {color}, styled as {estilo}, decorated with {decoracion}. "
+        f"Un pastel con {porciones} porciones, en forma de {forma}, "
+        f", cubierto con{topping}, con temática {tematica}, "
+        f"con colores {color}, , con estilo {estilo},decorado con {decoracion}. "
     )
     if mensaje:
         prompt += f"Message on the cake: {mensaje}"
@@ -58,7 +55,7 @@ async def generate(
     print(f"Prompt: {prompt}")
 
     # Configurar la solicitud a la API de DreamStudio
-    api_url = "https://api.stability.ai/v1/generation/stable-diffusion-v1-5/text-to-image"
+    api_url = "https://cloud.leonardo.ai/api/rest/v1/generations"
     headers = {
         "Authorization": f"Bearer {API_KEY}",
         "Content-Type": "application/json",
@@ -75,13 +72,18 @@ async def generate(
     # Realizar la solicitud a la API
     response = requests.post(api_url, headers=headers, json=payload)
 
-    # Manejar la respuesta
+       # Manejar la respuesta
     if response.status_code == 200:
-        result = response.json()
-        image_url = result["artifacts"][0]["url"]  # URL de la imagen generada
-        print(f"Imagen generada: {image_url}")
-        return templates.TemplateResponse("base.html", {"request": request, "image_url": image_url})
+         result = response.json()
+         image_url = result["artifacts"][0]["url"]  # URL de la imagen generada
+         return templates.TemplateResponse(
+                "base.html", 
+                 {"request": request, "image_url": image_url}
+         )
     else:
-        error_message = response.json().get("message", "Error al generar la imagen.")
-        print(f"Error: {error_message}")
-        return templates.TemplateResponse("base.html", {"request": request, "msg": error_message})
+         error_message = response.json().get("message", "Error al generar la imagen.")
+         return templates.TemplateResponse(
+               "base.html", 
+              {"request": request, "msg": error_message}
+         )
+

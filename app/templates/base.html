@@ -20,7 +20,8 @@
            <label>Detalle de pedido:</label>
         </div>
     
-        <form id="cakeForm" name="Pedido" method="post" class="form-step">
+        <form id="cakeForm" name="Pedido" method="post" action="/generate/" class="form-step">
+
             <div class="section">
                  <label >Número de porciones:    </label>
                  <input type="number" id="porciones" name="porciones">
@@ -98,11 +99,14 @@
                 <input type="text" id="mensage" name="mensaje">
             </div>
             
-            <button type="button" id="submitBtn">Generar Pastel</button>
+            <button type="submit" id="submitBtn">Generar Pastel</button>
         </form>
-    {% if image_url %}
-        <img src="{{ image_url }}" alt="Generated Image">
-    {% endif %}
+        {% if image_url %}
+        <div class="section">
+            <h3>Imagen generada:</h3>
+            <img src="{{ image_url }}" alt="Generated Cake Image" style="max-width: 100%; height: auto;">
+        </div>
+        {% endif %}
 
     </main>
     <footer>
