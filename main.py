@@ -1,4 +1,5 @@
 from fastapi import FastAPI, HTTPException
+from fastapi.responses import HTMLResponse
 from pydantic import BaseModel
 import httpx
 
@@ -14,24 +15,21 @@ class CakeCustomizationRequest(BaseModel):
     forma: str
     adornos: str
 
-# Modelo para el estado de generación
-class GenerationStatus(BaseModel):
-    generationId: str
+@app.get("/", response_class=HTMLResponse)
+async def serve_html():
+    with open("templates/index.html", "r") as file:
+        html_content = file.read()
+    return HTMLResponse(content=html_content, status_code=200)
 
 @app.post("/generate-cake-image/")
 async def generate_cake_image(request: CakeCustomizationRequest):
-    """
-    Crea un prompt basado en las características del pastel y solicita la generación de la imagen.
-    """
-    # Construir el prompt
     prompt = (
-        f"Genera un pastel de {request.personalizacion} de sabor {request.sabores}, con forma {request.forma} y decorado con {request.adornos}."
+        f"Haz un pastel de {request.personalizacion} con sabor {request.sabores}, la forma del pastel es {request.forma} y el decorado externo con {request.adornos}."
     )
 
-    # Configuración del payload para la API externa
     payload = {
         "prompt": prompt,
-        "modelId": "6bef9f1b-29cb-40c7-b9df-32b51c1f67d3",  # Reemplaza con el ID de modelo adecuado
+        "modelId": "6bef9f1b-29cb-40c7-b9df-32b51c1f67d3",
         "width": 512,
         "height": 512,
     }
@@ -41,34 +39,16 @@ async def generate_cake_image(request: CakeCustomizationRequest):
         "content-type": "application/json"
     }
 
-    # Enviar la solicitud a la API externa
     async with httpx.AsyncClient() as client:
         response = await client.post(API_URL, json=payload, headers=headers)
 
     if response.status_code != 200:
         raise HTTPException(status_code=response.status_code, detail=response.text)
 
-    return response.json()
+    data = response.json()
+    # Asumimos que la API devuelve la URL de la imagen en "imageUrl"
+    image_url = data.get("imageUrl")
+    if not image_url:
+        raise HTTPException(status_code=500, detail="La API no devolvió la URL de la imagen.")
 
-
-@app.get("/check-status/{generation_id}")
-async def check_status(generation_id: str):
-    """
-    Consulta el estado de una generación de imagen usando el generationId.
-    """
-    url = f"{API_URL}/{generation_id}"
-    headers = {
-        "authorization": f"Bearer {API_KEY}"
-    }
-
-    async with httpx.AsyncClient() as client:
-        response = await client.get(url, headers=headers)
-
-    if response.status_code != 200:
-        raise HTTPException(status_code=response.status_code, detail=response.text)
-
-    return response.json()
-
-@app.get("/")
-async def read_root():
-    return {"message": "Welcome to my FastAPI project!"}
+    return {"image_url": image_url}

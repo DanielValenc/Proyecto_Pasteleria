@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Personalización de Pasteles</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 20px;
+      padding: 0;
+    }
+    .form-container {
+      margin: auto;
+      max-width: 400px;
+      text-align: center;
+    }
+    input, select, button {
+      margin: 10px 0;
+      padding: 10px;
+      width: 100%;
+      box-sizing: border-box;
+    }
+    img {
+      margin-top: 20px;
+      max-width: 100%;
+    }
+  </style>
+</head>
+<body>
+  <div class="form-container">
+    <h1>Personaliza tu Pastel</h1>
+    <form id="cakeForm">
+      <input type="text" id="personalizacion" placeholder="Personalización" required />
+      <input type="text" id="sabores" placeholder="Sabores" required />
+      <input type="text" id="forma" placeholder="Forma" required />
+      <input type="text" id="adornos" placeholder="Adornos" required />
+      <button type="submit">Generar Imagen</button>
+    </form>
+    <div id="result">
+      <img id="cakeImage" src="" alt="Imagen del pastel generada" hidden />
+    </div>
+  </div>
+
+  <script>
+    document.getElementById("cakeForm").addEventListener("submit", async (event) => {
+      event.preventDefault();
+
+      const personalizacion = document.getElementById("personalizacion").value;
+      const sabores = document.getElementById("sabores").value;
+      const forma = document.getElementById("forma").value;
+      const adornos = document.getElementById("adornos").value;
+
+      const response = await fetch("/generate-cake-image/", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ personalizacion, sabores, forma, adornos }),
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        const imageUrl = data.generation.imageUrl; // Cambia según la respuesta de tu API
+        const cakeImage = document.getElementById("cakeImage");
+        cakeImage.src = imageUrl;
+        cakeImage.hidden = false;
+      } else {
+        alert("Error al generar la imagen: " + data.detail);
+      }
+    });
+  </script>
+</body>
+</html>
