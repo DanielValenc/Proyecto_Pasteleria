@@ -3,8 +3,12 @@ from pydantic import BaseModel
 import httpx
 from b2sdk.v2 import InMemoryAccountInfo, B2Api
 from io import BytesIO
+from fastapi.staticfiles import StaticFiles
+
 
 app = FastAPI()
+
+app.mount("/static", StaticFiles(directory="static"), name="static")
 
 # Configuración de la API externa
 API_URL = "https://cloud.leonardo.ai/api/rest/v1/generations"
@@ -89,57 +93,50 @@ async def check_status(generation_id: str):
     if response.status_code != 200:
         raise HTTPException(status_code=response.status_code, detail=response.text)
 
-    # Obtener la respuesta completa para depuración
     result = response.json()
-
-    # Revisar toda la estructura de la respuesta para ver dónde está el estado y las imágenes
     generations_data = result.get("generations_by_pk", {})
 
     if not generations_data:
         raise HTTPException(status_code=500, detail="No se encontraron datos de generación.")
 
-    # Verificar el estado de la generación
     status = generations_data.get("status")
-
     if not status:
         raise HTTPException(status_code=500, detail="No se encontró el estado de la generación.")
 
     if status != "COMPLETE":
-        raise HTTPException(status_code=500, detail=f"Generación en proceso. Estado actual: {status}")
+        return {"status": status}
 
-    # Acceder a las imágenes generadas
     generated_images = generations_data.get("generated_images", [])
     if not generated_images:
         raise HTTPException(status_code=500, detail="No se encontraron imágenes generadas.")
 
-    # Lista para guardar las URLs de las imágenes subidas
     uploaded_files = []
 
-    # Iterar sobre las imágenes generadas y subirlas a Backblaze
     for idx, image in enumerate(generated_images):
         image_url = image.get("url")
         if not image_url:
-            raise HTTPException(status_code=500, detail="No se encontró la URL de la imagen generada.")
+            continue
 
-        # Descargar la imagen desde la URL
         async with httpx.AsyncClient() as client:
             image_response = await client.get(image_url)
 
         if image_response.status_code != 200:
             raise HTTPException(status_code=image_response.status_code, detail="Error al descargar la imagen generada.")
 
-        # Subir la imagen a Backblaze B2 con un nombre único
-        file_name = f"pasteles/{generation_id}_image_{idx}.jpg"  # Usamos el generation_id y el índice para nombrar el archivo
+        file_name = f"pasteles/{generation_id}_image_{idx}.jpg"
         bucket.upload_bytes(image_response.content, file_name)
 
-        # Guardar el nombre de archivo para referencia
-        uploaded_files.append(file_name)
+        # Generar el enlace público con la URL correcta para el bucket
+        public_url = f"https://f005.backblazeb2.com/file/{BUCKET_NAME}/{file_name}"
+        uploaded_files.append(public_url)
 
-    # Generar el enlace público (aunque no es necesario mostrarlo)
-    public_url = f"https://f002.backblazeb2.com/file/{BUCKET_NAME}/{uploaded_files[0]}"  # Mostramos solo el primero
+    return {"status": "COMPLETE", "uploaded_files": uploaded_files}
 
-    return {"message": "Imágenes generadas y almacenadas exitosamente.", "uploaded_files": uploaded_files}
 
+
+@app.get("/")
+async def read_root():
+    return {"message": "Welcome to my FastAPI project!"}
 
 @app.get("/")
 async def read_root():
