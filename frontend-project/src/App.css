@@ -1,0 +1,64 @@
+#root {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 2rem;
+  text-align: center;
+}
+
+
+.logoT {
+
+  width:45px ;
+  height:60px;
+  align-items: center;
+}
+
+
+.mi-navbar{
+  background-color: #ec7879;
+  display: inline;  
+  
+  }
+.contenedorC{
+  width: 350px ;
+  height: 270px;
+  display: flex;
+  justify-content: flex-end; /* Alinea el carrusel a la derecha */
+  margin-right: 20px;
+}
+
+#contenidoFrase{
+  margin-left: auto;
+  margin: 20px;
+}
+
+#contenidoCar{
+  margin-right: auto;
+  margin: 20px;
+}
+
+p{
+text-align: left;
+font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+font-size: 30px;
+}
+  #imgC{
+    width: 3500px ;
+    height: 270px;
+  }
+
+#miNavbar {
+  color: #3d0c08;
+  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+  text-align: center;
+}
+
+#Opciones{
+  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+  color: #ffffff;
+  background-color: #3d0c08;
+  border-radius:9px ;
+  
+}
+
+
