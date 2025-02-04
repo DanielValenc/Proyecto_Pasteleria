@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Personalización de Pasteles</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+
+
+<body>
+    <div class="container">
+        <h1>Personaliza tu Pastel</h1>
+        <form id="cakeForm" action="/generate-cake-image/" method="post">
+            <div class="form-group">
+                <label for="personalizacion">Personalización:</label>
+                <input type="text" id="personalizacion" name="personalizacion" placeholder="Ej: Fiesta de cumpleaños" required>
+            </div>
+            <div class="form-group">
+                <label for="sabores">Sabores:</label>
+                <input type="text" id="sabores" name="sabores" placeholder="Ej: Chocolate, Vainilla" required>
+            </div>
+            <div class="form-group">
+                <label for="forma">Forma:</label>
+                <input type="text" id="forma" name="forma" placeholder="Ej: Redonda, Cuadrada" required>
+            </div>
+            <div class="form-group">
+                <label for="adornos">Adornos:</label>
+                <input type="text" id="adornos" name="adornos" placeholder="Ej: Flores, Figuras de azúcar" required>
+            </div>
+
+
+            <button type="submit">
+            <span> Generar Imagen
+            </span>
+            </button>
+
+
+        </form>
+        <div id="response" class="response"></div>
+    </div>
+    <script>
+        const form = document.getElementById('cakeForm');
+        const responseDiv = document.getElementById('response');
+
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            responseDiv.textContent = "Generando tu pastel...";
+            const formData = new FormData(form);
+            const data = Object.fromEntries(formData.entries());
+
+            const response = await fetch(form.action, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(data),
+            });
+
+            if (response.ok) {
+                const result = await response.json();
+                responseDiv.innerHTML = `
+                    <p>Imagen generada con éxito. Tu ID de generación es:</p>
+                    <code>${result.generation_id}</code>
+                `;
+            } else {
+                const error = await response.text();
+                responseDiv.innerHTML = `<p style="color: red;">Error: ${error}</p>`;
+            }
+        });
+    </script>
+
+</body>
+
+
+</html>

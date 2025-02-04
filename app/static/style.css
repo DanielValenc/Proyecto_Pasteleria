@@ -1,0 +1,117 @@
+body {
+    font-family: Arial, sans-serif;
+    height: 100vh;
+    width: 100%;
+    background-size: cover;
+    background-image: url("https://w.wallhaven.cc/full/y8/wallhaven-y8zy5x.png");
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+
+}
+
+.container {
+    max-width: 600px;
+    margin: 50px auto;
+    padding: 2rem;
+    background: rgba(2, 1, 1, 0.15);
+    border-radius: 16px;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.8);
+    backdrop-filter: blur(9.5px);
+    border: 1px solid rgba(255, 255, 255, 0.84);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    z-index: 1;
+    text-align: center;
+}
+
+h1 {
+    color: white;
+    margin-bottom: 1rem;
+}
+
+.form-group {
+    margin-bottom: 1rem;
+    text-align: left;
+}
+
+label {
+    color: white;
+    font-weight: bold;
+    display: block;
+    margin-bottom: 0.5rem;
+}
+
+input {
+    width: 100%;
+    padding: 0.5rem;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 1rem;
+}
+
+/* BOTON GENERAR IMAGEN */
+button {
+ display: inline-block;
+ width: 150px;
+ height: 50px;
+ border-radius: 10px;
+ border: 1px solid #03045e;
+ position: relative;
+ overflow: hidden;
+ transition: all 0.5s ease-in;
+ z-index: 1;
+}
+
+button::before,
+button::after {
+ content: '';
+ position: absolute;
+ top: 0;
+ width: 0;
+ height: 100%;
+ transform: skew(15deg);
+ transition: all 0.5s;
+ overflow: hidden;
+ z-index: -1;
+}
+
+button::before {
+ left: -10px;
+ background: #875007;
+}
+
+button::after {
+ right: -10px;
+ background: #E4AA19;
+}
+
+button:hover::before,
+button:hover::after {
+ width: 58%;
+}
+
+button:hover span {
+ color: white;
+ transition: 0.3s;
+}
+
+button span {
+ color: #03045e;
+ font-size: 18px;
+ transition: all 0.3s ease-in;
+}
+
+
+.response {
+    margin-top: 1rem;
+    font-size: 0.9rem;
+    color: white;
+}
+
