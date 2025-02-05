@@ -12,6 +12,7 @@ app = FastAPI()
 templates = Jinja2Templates(directory="templates")
 # Carpeta Static archivos Css
 app.mount("/static", StaticFiles(directory="static"), name="static")
+app.mount("/media", StaticFiles(directory="media"), name="media")
 
 # Configuración de la API externa
 API_URL = "https://cloud.leonardo.ai/api/rest/v1/generations"
