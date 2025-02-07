@@ -125,3 +125,15 @@ async def check_status(generation_id: str):
 async def render_home(request: Request):
     """Renderiza el archivo index.html."""
     return templates.TemplateResponse("index.html", {"request": request})
+
+@app.get("/resumen")
+async def render_resumen(request: Request, image: str, personalizacion: str, sabores: str, forma: str, adornos: str):
+    """Renderiza la página de resumen del pedido con la imagen seleccionada y los detalles."""
+    return templates.TemplateResponse("resumen.html", {
+        "request": request,
+        "image": image,
+        "personalizacion": personalizacion,
+        "sabores": sabores,
+        "forma": forma,
+        "adornos": adornos
+    })

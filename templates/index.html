@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TartamIA - Generador de Pasteles</title>
-    <link rel="stylesheet" href="/static/styles.css">
+    <title>TartamIA - Personaliza tu pastel</title>
+    <link rel="stylesheet" href="/static/style.css">
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 </head>
 <body>
@@ -16,43 +16,35 @@
             </div>
             <nav>
                 <ul>
-                    <li><a href="index.html">Inicio</a></li>
-                    <li><a href="home.html">Home</a></li>
+                    <li><a href="/">Inicio</a></li>
                     <li><a href="#">Carrito</a></li>
                 </ul>
             </nav>
         </div>
     </header>
 
-    <main class="main-container">
-        <div class="form-section animate-slide-in">
-            <h2>Vamos a Crear tu Pastel Personalizado!</h2>
-            <h1>PASO 1</h1>
-            <form id="cakeForm">
-                <label for="personalizacion">Personalización:</label>
-                <input type="text" id="personalizacion" name="personalizacion" required placeholder="Describe tu pastel ideal...">
+    <main class="form-container">
+        <h2>Personaliza tu pastel</h2>
+        <form id="cakeForm">
+            <label for="personalizacion">Personalización:</label>
+            <input type="text" id="personalizacion" name="personalizacion" required>
 
-                <label for="sabores">Sabores:</label>
-                <input type="text" id="sabores" name="sabores" required placeholder="Ej: Chocolate, vainilla...">
+            <label for="sabores">Sabores:</label>
+            <input type="text" id="sabores" name="sabores" required>
 
-                <label for="forma">Forma:</label>
-                <input type="text" id="forma" name="forma" required placeholder="Ej: Redonda, cuadrada...">
+            <label for="forma">Forma:</label>
+            <input type="text" id="forma" name="forma" required>
 
-                <label for="adornos">Adornos:</label>
-                <input type="text" id="adornos" name="adornos" required placeholder="Ej: Flores, figuras...">
+            <label for="adornos">Adornos:</label>
+            <input type="text" id="adornos" name="adornos" required>
 
-                <button type="submit">Generar Imagen</button>
-            </form>
-        </div>
-
-        <div class="gallery-section animate-fade-in">
-            <h2> Seleciona tu Imagen Preferida </h2>
-            <h1>PASO 2</h1>
-            <div class="gallery" id="gallery">
-                <p>No se han generado imágenes aún.</p>
-            </div>
-        </div>
+            <button type="submit">Generar Imagen</button>
+        </form>
     </main>
+
+    <section class="gallery" id="gallery">
+        <p>No se han generado imágenes aún.</p>
+    </section>
 
     <script>
         const form = document.getElementById('cakeForm');
@@ -83,7 +75,9 @@
 
                 gallery.innerHTML = images.map(image => `
                     <div class="image-item">
-                        <img src="${image}" alt="Pastel generado">
+                        <a href="/resumen?image=${encodeURIComponent(image)}&personalizacion=${encodeURIComponent(data.personalizacion)}&sabores=${encodeURIComponent(data.sabores)}&forma=${encodeURIComponent(data.forma)}&adornos=${encodeURIComponent(data.adornos)}">
+                            <img src="${image}" alt="Pastel generado">
+                        </a>
                     </div>
                 `).join('');
             } catch (error) {
@@ -92,6 +86,5 @@
             }
         });
     </script>
-
 </body>
 </html>
