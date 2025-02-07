@@ -48,7 +48,7 @@ async def generate_cake_image(request: CakeCustomizationRequest):
 
     payload = {
         "prompt": prompt,
-        "modelId": "6908bfaf-8cf2-4fda-8c46-03f892d82e06",
+        "modelId": "a097c2df-8f0c-4029-ae0f-8fd349055e61",
         "width": 512,
         "height": 512,
     }
