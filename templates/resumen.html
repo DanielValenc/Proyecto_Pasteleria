@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resumen del Pedido</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <header class="menu-bar">
+        <div class="menu-container">
+            <div class="logo">
+                <img src="/media/logo.png" alt="TartamIA Logo">
+                <h1>Tartam<span>IA</span></h1>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="/">Inicio</a></li>
+                    <li><a href="#">Carrito</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main class="summary-container">
+        <h2>Resumen de tu Pedido</h2>
+        <div class="summary-content">
+            <img src="{{ image }}" alt="Pastel Seleccionado">
+            <div class="details">
+                <p><strong>Personalización:</strong> {{ personalizacion }}</p>
+                <p><strong>Sabores:</strong> {{ sabores }}</p>
+                <p><strong>Forma:</strong> {{ forma }}</p>
+                <p><strong>Adornos:</strong> {{ adornos }}</p>
+            </div>
+        </div>
+        <a href="/" class="back-button">Volver al Inicio</a>
+    </main>
+</body>
+</html>
