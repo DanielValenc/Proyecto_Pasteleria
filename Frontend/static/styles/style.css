@@ -1,0 +1,89 @@
+html, body {
+    font-family: 'Slabo 27px', serif;
+    margin: 0;
+    padding: 0;
+    height: 100%;  /* Asegura que la página ocupe toda la altura de la pantalla */
+    display: flex;
+    box-sizing: border-box;
+    flex-direction: column;
+    width: 100%; 
+    overflow-x: hidden; 
+    
+  }
+
+  footer {
+   
+    background: linear-gradient(to top,#ec7879,60%, #ffffff);
+    color: #3d0c08;
+    font-family: 'Slabo 27px', serif;
+    text-align: center;
+    padding: 20px 0;
+    width: 100%;
+    position: relative; /* Posicionamiento normal para que el footer esté al final */
+    margin-top: auto;
+ }
+ .imgNav{
+    width: 30px;
+    height: 30px;
+}
+.opciones button:hover {
+    background-color: #3d0c0892; /* Azul más oscuro al pasar el mouse */
+    transform: scale(1.05); /* Efecto de agrandado */
+}
+
+.navbar{
+
+    background: linear-gradient(to bottom right, #ffffff,#ec7879);
+    justify-content: space-between; /* Para que los elementos estén bien distribuidos */
+    align-items: center; /* Alinea verticalmente todos los elementos */
+    padding: 10px 20px;
+    display: flex;
+    
+}
+.titulo{
+    font-family: 'Dancing Script', cursive;
+    font-size: 35px;
+}
+.imgLogo{
+    width: 65px;
+    height: 85px;
+    margin-right: 20px;
+    margin-left: 20px;
+}
+
+.opciones{
+    list-style: none;
+    display: flex;
+    gap: 15px;
+    padding: 0;
+    margin: 0;
+    align-items: center;
+}
+.opciones li {
+    display: inline-block;
+}
+
+.opciones button {
+    text-decoration: none;
+    color: white;
+    font-weight: bold;
+    align-content: center;
+    padding: 10px 15px;
+    background-color: #3d0c08; /* Color azul tipo botón */
+    border-radius: 5px;
+    transition: background-color 0.3s, transform 0.2s;
+    margin-right: 5px;
+    font-family: 'Slabo 27px', serif;
+    
+}
+
+.logo{
+    display: flex;
+    align-items: center;
+}
+
+.labelR{
+    color:#ec7879;
+}
+
+/* Eliminar puntos o estilo de lista */

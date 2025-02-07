@@ -6,10 +6,16 @@ from fastapi import HTTPException
 
 
 async def generate_cake_image(request: CakeCustomizationRequest):
-    prompt = f"Genera un pastel de {request.personalizacion} de sabor {request.sabores}, con forma {request.forma} y decorado con {request.adornos}."
-    
+    prompt = ( f"Diseña un pastel con la siguiente información: La forma del pastel es {request.forma}, "
+               f"con {request.porciones} porciones. Tiene una cubierta de {request.cubierta} y va tener una distribución de {request.distribucion}."
+               f"La decoración incluye {',' .join(request.decoracion)}. Además, lleva un mensaje que dice: {request.mensajePastel}"
+               f"Se debe incluir la siguiente personalización: {request.personalizacion}. "
+               f"El diseño debe ser factible para un pastelero profesional y visualmente atractivo."
+             )
+
     payload = {
         "prompt": prompt,
+        #Nombre del modelo:
         "modelId": "6bef9f1b-29cb-40c7-b9df-32b51c1f67d3", 
         "width": 512,
         "height": 512,
@@ -23,6 +29,7 @@ async def generate_cake_image(request: CakeCustomizationRequest):
         raise HTTPException(status_code=response.status_code, detail=response.text)
     
     result = response.json()
+    
     generation_id = result.get("sdGenerationJob", {}).get("generationId")
     
     if not generation_id:

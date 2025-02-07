@@ -1,6 +1,10 @@
 <!-- templates/home.html -->
 {% extends "index.html" %}
 
+{% block head %}
+<link rel="stylesheet" href="/static/styles/style_form.css">
+{% endblock %}
+
 {% block content %}
 
 
@@ -103,7 +107,7 @@
   
           <!-- Botón de enviar -->
           <div class="section">
-              <button type="button" id="submitBtn">Generar Pastel</button>
+              <button type="submit" id="submitBtn" class="opciones">Generar Pastel</button>
           </div>
       </form>
   </div>

@@ -10,6 +10,6 @@ route = APIRouter()
 templates = Jinja2Templates(directory="Frontend/templates")
 
 # Ruta principal
-@route.get("/products/", response_class=HTMLResponse)
+@route.get("/profile/", response_class=HTMLResponse)
 async def index(request: Request):
-    return templates.TemplateResponse("products.html",{"request": request})
+    return templates.TemplateResponse("profile.html",{"request": request})

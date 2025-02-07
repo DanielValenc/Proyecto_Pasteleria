@@ -1,0 +1,62 @@
+
+/* Evita el scroll solo en el login */
+body#login, html {
+    
+    margin: 0;
+    padding: 0;
+    overflow: hidden;  /* Evita la barra de desplazamiento */
+    align-items: center;
+    background-color: #ffffff; /* Color de fondo */
+}
+
+/* Contenedor del login */
+.container-login {
+    width: 900px; /* Tamaño fijo */
+    height: 90vh;
+    padding: 10px;
+    
+    border-radius: 10px;
+    background: linear-gradient(#3d0c08, 80%, #ffffff);
+    
+    
+}
+
+
+
+
+.container-Logo{
+    display: flex; 
+   justify-items: center;
+    height: 88vh;
+    background: linear-gradient(to top,#ec7879,40%, #ffffff);
+    align-content: center;
+}
+
+.content-cards{
+    height: 88vh;
+    }
+
+
+  /* Personaliza la imagen */
+  .imgLogin {
+    
+    display: block;
+    max-height: 50%;
+    width: auto;
+}
+  
+
+  .labelFL{
+    font-size: 18px;
+    font-weight: bold;
+    color: #3d0c08;
+    font-family: 'Slabo 27px', serif;
+  }
+
+  .labelFLS{
+    font-size: 15px;
+    color: #3d0c08;
+    font-family: 'Slabo 27px', serif;
+  }
+
+  

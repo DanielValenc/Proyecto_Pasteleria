@@ -10,6 +10,7 @@ route = APIRouter()
 templates = Jinja2Templates(directory="Frontend/templates")
 
 # Ruta principal
-@route.get("/products/", response_class=HTMLResponse)
-async def index(request: Request):
-    return templates.TemplateResponse("products.html",{"request": request})
+@route.post("/upload-to-backblaze/")
+async def b2(request: Request):
+    print(request)
+    return await  b2(request)

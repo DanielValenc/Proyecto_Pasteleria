@@ -37,3 +37,4 @@ class CakeCustomizationRequest(BaseModel):
     decoracion: List[str]
     mensajePastel: str
     personalizacion:str
+

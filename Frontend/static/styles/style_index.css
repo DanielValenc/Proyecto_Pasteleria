@@ -1,0 +1,80 @@
+
+
+#grupoForma {
+    display: flex;
+     /* Cambia la dirección a columna */
+    /* Alinea los elementos a la izquierda */
+    gap: 10px; /* Espacio entre los elementos */
+    margin: 15px;
+    
+    
+}
+
+#menu ul {
+    list-style-type: none; /* Eliminar marcadores de lista */
+    padding: 0;
+    margin: 0;
+  }
+  
+
+  /* Estilo del botón de configuración */
+  .dropdown {
+    text-decoration: none;
+    color: white;
+    font-weight: bold;
+    padding: 10px 15px;
+   
+    border-radius: 5px;
+    transition: background-color 0.3s, transform 0.2s;
+    margin-right: 5px;
+    font-family: 'Slabo 27px', serif;
+  }
+  
+  #dropdownBtn img {
+    width: 30px; /* Ajusta el tamaño de la imagen */
+    height: auto;
+  }
+  
+  /* Estilo del menú desplegable */
+  .dropdown-content {
+    display: none;
+    position: absolute;
+    right: 0; /* Asegura que el menú no se salga por la izquierda */
+    background-color: #3d0c08; /* Mismo color que los botones */
+    min-width: 160px;
+    box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
+    z-index: 1;
+    border-radius: 5px; /* Bordes redondeados como los botones */
+  }
+  
+  .dropdown-content a {
+    color: white;
+    font-family: 'Slabo 27px', serif;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+  }
+  
+  .dropdown-content a:hover {
+    background-color: #ddd;
+  }
+  
+  /* Estilo de los enlaces en el menú desplegable */
+  .dropdown-content a img {
+    width: 20px; /* Ajusta el tamaño de las imágenes */
+    height: auto;
+    margin-right: 10px; /* Espaciado entre la imagen y el texto */
+
+    
+  }
+  
+  /* Mostrar el menú cuando el ratón pase por encima */
+  .dropdown:hover .dropdown-content {
+    display: block;
+  }
+  
+ 
+
+
+
+

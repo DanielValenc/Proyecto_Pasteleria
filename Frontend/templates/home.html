@@ -1,19 +1,37 @@
 <!-- templates/home.html -->
 {% extends "index.html" %}
 
+{% block head %}
+<link rel="stylesheet" href="/static/styles/style_home.css">
+{% endblock %}
+
 {% block content %}
         <section>
             <div class="containerHome">
-                <div class="row">
-                    <!-- Columna para la frase -->
-                    <div class="col-md-6">
+                <div class="row columnas">
+                    <!-- Columna para la frase, bienvenida, explicación y botón -->
+                    <div class="col-md-6 d-flex flex-column justify-content-center container-Pasos">
                         <p class="frase">
-                            Tu idea, nuestra receta perfecta
+                            "Tu idea, nuestra receta perfecta"
                         </p>
+                        <h2 class="titleB">Bienvenido a TartamIA, donde tu imaginación se convierte en pastel.</h2>
+                        <p clas="textHome">¿Quieres un pastel único y especial? Nosotros lo hacemos posible con tecnología de vanguardia. Aquí puedes crear tu pastel a medida, con sabores, colores y diseños que solo tú podrás imaginar.</p>
+                        
+                        <!-- Explicación del proceso de personalización -->
+                        <h3 class="titleB">¿Cómo funciona?</h3>
+                        <ul>
+                            <li class="textpasos"><strong class="pasos">Paso 1:</strong> Elige el tipo de pastel: tamaño, sabor y forma.</li>
+                            <li class="textpasos"><strong class="pasos">Paso 2:</strong> Personaliza el diseño: colores, temática y detalles.</li>
+                            <li class="textpasos"><strong class="pasos">Paso 3:</strong> Deja que la IA cree una propuesta única para ti.</li>
+                            <li class="textpasos"><strong class="pasos">Paso 4:</strong> Revisa y ajusta el diseño hasta que sea perfecto.</li>
+                        </ul>
+                        
+                        <!-- Botón para comenzar la personalización -->
+                        <button  class="btnGenerate" id="btnGenerate" type="button">¡Comienza tu diseño personalizado!</button>
                     </div>
         
                     <!-- Columna para el carrusel -->
-                    <div class="col-md-6">
+                    <div class="col-md-6 container-carrusel">
                         <aside class="carrusel">
                             <div id="carouselExampleSlidesOnly" class="carousel slide" data-bs-ride="carousel">
                                 <div class="carousel-inner">
@@ -32,7 +50,6 @@
                     </div>
                 </div>
             </div>
-    
         </section>
         
 {% endblock %}

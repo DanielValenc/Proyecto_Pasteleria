@@ -4,9 +4,9 @@ from Backend.services.auth import create_access_token, get_db, verify_password,g
 from Backend.models import User
 from sqlalchemy.orm import Session
 
-router = APIRouter()
+route = APIRouter()
 
-@router.post("/register/")
+@route.post("/register/")
 def register_user(user: UserCreate, db: Session = Depends(get_db)):
     hashed_password = get_password_hash(user.password)
     new_user = User(**user.dict(), hashed_password=hashed_password)
@@ -15,7 +15,7 @@ def register_user(user: UserCreate, db: Session = Depends(get_db)):
     db.refresh(new_user)
     return {"message": "User registered successfully"}
 
-@router.post("/login/")
+@route.post("/login/")
 def login(request: LoginRequest, db: Session = Depends(get_db)):
     user = db.query(User).filter(User.username == request.username).first()
     if not user or not verify_password(request.password, user.hashed_password):
