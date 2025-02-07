@@ -12,7 +12,10 @@
    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script&display=swap" rel="stylesheet">
 
    <title>TartamIA</title>
-   <script src="/static/script.js" defer></script>
+
+
+
+
    {% block head %}{% endblock %}
 
 </head>
@@ -25,13 +28,17 @@
            </div>
            <ul class="opciones">
                <li><button id="homeBtn"><img class="imgNav" src="/static/images/home.png">Home</button></li>
-               <li><button id="formBtn"><img class="imgNav" src="/static/images/pastel.png">¡Haz tu Pastel!</button></li>
+               <li>
+                   <button id="formBtn">
+                       <img class="imgNav" src="/static/images/pastel.png">¡Haz tu Pastel!
+                   </button>
+               </li>
                <li><button id="productsBtn"><img class="imgNav" src="/static/images/producto.png">Productos</button></li>
                
                <nav id="menu">
                 <ul>
                   <li class="dropdown">
-                    <button id="dropdownBtn" class="opcionesC">
+                    <button id="dropdownBtn"  class="opcionesC">
                       <img class="imgNav" src="/static/images/confi.png" alt="Configuración">
                     </button>
                     <!-- Menú desplegable -->
@@ -58,6 +65,25 @@
    <footer>
        <p>Make Your Cake © 2025 | Designed with ❤️</p>
    </footer>
+
+<script >
+
+    document.getElementById('homeBtn').addEventListener('click', function() {
+        console.log("Home button clicked");
+        window.location.href = '/home/';
+    });
+
+    document.getElementById('formBtn').addEventListener('click', function() {
+        console.log("Form button clicked");
+        window.location.href = '/generate/';
+    });
+
+    document.getElementById('productsBtn').addEventListener('click', function() {
+        console.log("Products button clicked");
+        window.location.href = '/products/';
+    });
+
+</script>
 
    
 </body>
