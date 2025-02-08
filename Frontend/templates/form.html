@@ -3,135 +3,78 @@
 
 {% block head %}
 <link rel="stylesheet" href="/static/styles/style_form.css">
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 {% endblock %}
 
 {% block content %}
+<div class="container">
+    <label class="tituloForm">Diseñemos tu pastel</label>
+    <form id="cakeForm" class="formS">
+        <!-- Sección de Personalización adicional -->
+        <div class="section">
+            <label class="labelForm">Personalización adicional:</label>
+            <input type="text" name="personalizacion">
+        </div>
 
+        <!-- Sección de Forma del pastel -->
+        <div class="section">
+            <label class="labelForm">Forma del pastel:</label>
+            <div>
+                <label><input type="radio" name="forma" value="corazón"> Corazón</label>
+                <label><input type="radio" name="forma" value="cuadrado"> Cuadrado</label>
+                <label><input type="radio" name="forma" value="círculo"> Círculo</label>
+            </div>
+        </div>
 
-    <!-- Enlace a una página -->
+        <!-- Más secciones aquí... -->
 
-    <div class="container">
-      <label class="tituloForm">Diseñemos tu pastel</label>
-      <form action="/submit-form" method="POST" class="formS">
-          <!-- Sección de Sabor -->
-          <div class="section">
-              <label class="labelForm">Sabor:</label>
-              <div id="grupoForma">
-                  <label class="labelOp"><input type="radio" name="sabor" value="vainilla"> Vainilla</label>
-                  <label class="labelOp"><input type="radio" name="sabor" value="chocolate"> Chocolate</label>
-                  <label class="labelOp"><input type="radio" name="sabor" value="marmoleado"> Marmoleado</label>
-              </div>
-          </div>
-  
-          <!-- Sección de Forma del pastel -->
-          <div class="section">
-              <label class="labelForm">Forma del pastel:</label>
-              <div id="grupoForma">
-                  <label class="labelOp"><input type="radio" name="forma" value="corazón">  Corazón</label>
-                  <label class="labelOp"><input type="radio" name="forma" value="cuadrado">  Cuadrado</label>
-                  <label class="labelOp"><input type="radio" name="forma" value="círculo">  Círculo</label>
-              </div>
-          </div>
-  
-          <!-- Sección de Porciones -->
-          <div class="section">
-              <label class="labelForm">Porciones:</label>
-              <div id="grupoForma">
-                  <label class="labelOp"><input type="radio" name="porciones" value="4-10"> 4 - 10</label>
-                  <label class="labelOp"><input type="radio" name="porciones" value="10-12"> 10 - 12</label>
-                  <label class="labelOp"><input type="radio" name="porciones" value="15-20"> 15 - 20</label>
-                  <label class="labelOp"><input type="radio" name="porciones" value="20-25"> 20 - 25</label>
-                  <label class="labelOp"><input type="radio" name="porciones" value="25-30"> 25 - 30</label>
-                  <label class="labelOp">Otro: <input type="text" id="mensage-porciones" name="mensaje"></label>
-              </div>
-          </div>
-  
-          <!-- Sección de Relleno -->
-          <div class="section">
-              <label class="labelForm">Relleno:</label>
-              <div id="grupoForma">
-                  <label class="labelOp"><input type="radio" name="relleno" value="chocolate"> Chocolate</label>
-                  <label class="labelOp"><input type="radio" name="relleno" value="manjar"> Manjar</label>
-                  <label class="labelOp"><input type="radio" name="relleno" value="crema-pastelera"> Crema Pastelera</label>
-                  <label class="labelOp"><input type="radio" name="relleno" value="frutas"> Frutas</label>
-                  <label class="labelOp">Otro: <input type="text" id="mensage_relleno" name="mensaje"></label>
-              </div>
-          </div>
-  
-          <!-- Sección de Cubierta -->
-          <div class="section">
-              <label class="labelForm">Cubierta:</label>
-              <div id="grupoForma">
-                  <label class="labelOp"><input type="radio" name="cubierta" value="chantilly"> Chantilly</label>
-                  <label class="labelOp"><input type="radio" name="cubierta" value="fondant"> Fondant</label>
-                  <label class="labelOp"><input type="radio" name="cubierta" value="crema-batida"> Crema batida</label>
-                  <label class="labelOp">Otro: <input type="text" id="mensage-cubierta" name="mensaje"></label>
-              </div>
-          </div>
-  
-          <!-- Sección de Distribución -->
-          <div class="section">
-              <label class="labelForm">Distribución:</label>
-              <div id="grupoForma">
-                  <label class="labelOp"><input type="radio" name="distribucion" value="1-nivel"> 1 Nivel</label>
-                  <label class="labelOp"><input type="radio" name="distribucion" value="2-niveles"> 2 Niveles</label>
-                  <label class="labelOp"><input type="radio" name="distribucion" value="3-niveles"> 3 Niveles</label>
-                  <label class="labelOp">Otro: <input type="text" id="mensage-distribucion" name="mensaje"></label>
-              </div>
-          </div>
-  
-          <!-- Sección de Decoración -->
-          <div class="section">
-              <label class="labelForm">Decoración:</label>
-              <div id="grupoForma">
-                  <label class="labelOp"><input type="checkbox" name="decoracion" value="perlas-comestibles"> Perlas comestibles</label>
-                  <label class="labelOp"><input type="checkbox" name="decoracion" value="frutas"> Frutas</label>
-                  <label class="labelOp"><input type="checkbox" name="decoracion" value="flores"> Flores</label>
-                  <label class="labelOp"><input type="checkbox" name="decoracion" value="grageas"> Grageas</label>
-                  <label class="labelOp"><input type="checkbox" name="decoracion" value="chispas-de-chocolate"> Chispas de chocolate</label>
-                  <label class="labelOp">Otros: <input type="text" id="mensage-decoracion" name="mensaje"></label>
-              </div>
-          </div>
-  
-          <!-- Sección de Texto o mensaje -->
-          <div class="section">
-              <label class="labelForm">Texto o mensaje:</label>
-              <input type="text" id="mensage-texto" name="mensaje">
-          </div>
-  
-          <!-- Sección de Personalización adicional -->
-          <div class="section">
-              <label class="labelForm">Personalización adicional:</label>
-              <input type="text" id="mensage-personalizacion" name="mensaje">
-          </div>
-  
-          <!-- Botón de enviar -->
-          <div class="section">
-              <button type="submit" id="submitBtn" class="opciones">Generar Pastel</button>
-          </div>
-      </form>
-  </div>
-
-  <!-- Agregar un campo oculto para el pastelero -->
-<input type="hidden" id="pastelero_id" name="pastelero_id" value="PASTELERO_ID">
-
-<!-- Mostrar las imágenes generadas -->
-<div id="imagenes-generadas" style="display: none;">
-    <h3>Selecciona una imagen:</h3>
-    <div id="imagenes-container"></div>
-    <button type="button" id="seleccionar-imagen-btn">Seleccionar Imagen</button>
+        <div class="section">
+            <button type="submit" id="submitBtn" class="opciones">Generar Pastel</button>
+        </div>
+    </form>
 </div>
 
-<!-- Botón para enviar a WhatsApp -->
-<button type="button" id="whatsapp-btn" style="display: none;">Contactar al Pastelero</button>
+<section class="gallery" id="gallery">
+    <p>No se han generado imágenes aún.</p>
+</section>
 
-<!-- Mensaje después de generar -->
-<div id="shareMessage" style="display:none;">
-    <p>Selecciona una imagen para compartir en WhatsApp:</p>
-    <div id="generatedImages"></div>
-    <button id="shareBtn" style="display:none;">Compartir en WhatsApp</button>
-</div>
+<script>
+    const form = document.getElementById('cakeForm');
+    const gallery = document.getElementById('gallery');
 
+    form.addEventListener('submit', async (event) => {
+        event.preventDefault();
 
+        const formData = new FormData(form);
+        const data = Object.fromEntries(formData.entries());
+
+        try {
+            gallery.innerHTML = '<p>Generando imágenes...</p>';
+            const generateResponse = await axios.post('/generate-cake-image/', data);
+            const generationId = generateResponse.data.generation_id;
+
+            let images = [];
+            let status = '';
+            do {
+                await new Promise(resolve => setTimeout(resolve, 2000));
+                const statusResponse = await axios.get(`/check-status/${generationId}`);
+                status = statusResponse.data.status;
+                if (status === 'COMPLETE') {
+                    images = statusResponse.data.uploaded_files;
+                }
+            } while (status !== 'COMPLETE');
+
+            gallery.innerHTML = images.length > 0 ? images.map(image => `
+                <div class="image-item">
+                    <a href="/resumen?image=${encodeURIComponent(image)}">
+                        <img src="${image}" alt="Pastel generado">
+                    </a>
+                </div>
+            `).join('') : '<p>No se generaron imágenes.</p>';
+        } catch (error) {
+            console.error('Error generando imágenes:', error);
+            alert('Ocurrió un error al generar las imágenes.');
+        }
+    });
+</script>
 {% endblock %}
-

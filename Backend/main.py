@@ -9,12 +9,10 @@ from Backend.routes.registrer_routers import route as registrer_route
 from fastapi.staticfiles import StaticFiles
 import os
 
-
 app = FastAPI()
 
-
-
 app.mount("/static", StaticFiles(directory="Frontend/static"), name="static")
+
 
 app.include_router(login_route)
 app.include_router(home_route)
