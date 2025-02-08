@@ -12,7 +12,7 @@
    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script&display=swap" rel="stylesheet">
 
    <title>TartamIA</title>
-   <script src="/static/script.js" defer></script>
+   <script src="/static/scripts/script_routes.js" defer></script>
    {% block head %}{% endblock %}
 
 </head>
@@ -20,12 +20,14 @@
    <header>
        <nav class="navbar">
            <div class="logo">
+             <a href="/home/" class="homeRef">
                <img class="imgLogo" src="/static/images/LOGOT.png"/>
                <span class="titulo">TartamIA</span>
+             </a>  
            </div>
+
            <ul class="opciones">
-               <li><button id="homeBtn"><img class="imgNav" src="/static/images/home.png">Home</button></li>
-               <li><button id="formBtn"><img class="imgNav" src="/static/images/pastel.png">¡Haz tu Pastel!</button></li>
+              
                <li><button id="productsBtn"><img class="imgNav" src="/static/images/producto.png">Productos</button></li>
                
                <nav id="menu">

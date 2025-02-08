@@ -3,6 +3,7 @@
 
 {% block head %}
 <link rel="stylesheet" href="/static/styles/style_form.css">
+<script src="/static/scripts/script_form.js" defer></script>
 {% endblock %}
 
 {% block content %}
@@ -12,7 +13,12 @@
 
     <div class="container">
       <label class="tituloForm">Diseñemos tu pastel</label>
-      <form action="/submit-form" method="POST" class="formS">
+      <form action="/generate/" method="POST" class="cakeForm" id="cakeForm">
+
+        <div class="section">
+            <label class="labelForm">Temática:</label>
+            <input type="text" id="tematica" name="tematica">
+        </div>
           <!-- Sección de Sabor -->
           <div class="section">
               <label class="labelForm">Sabor:</label>
@@ -20,8 +26,10 @@
                   <label class="labelOp"><input type="radio" name="sabor" value="vainilla"> Vainilla</label>
                   <label class="labelOp"><input type="radio" name="sabor" value="chocolate"> Chocolate</label>
                   <label class="labelOp"><input type="radio" name="sabor" value="marmoleado"> Marmoleado</label>
+                  <label class="labelOp">Otro: <input type="text" id="sabor-otro" name="sabor-otro" oninput="handleOtherInput(this)"></label>
+                </div>
               </div>
-          </div>
+          
   
           <!-- Sección de Forma del pastel -->
           <div class="section">
@@ -30,8 +38,10 @@
                   <label class="labelOp"><input type="radio" name="forma" value="corazón">  Corazón</label>
                   <label class="labelOp"><input type="radio" name="forma" value="cuadrado">  Cuadrado</label>
                   <label class="labelOp"><input type="radio" name="forma" value="círculo">  Círculo</label>
+                  <label class="labelOp">Otro: <input type="text" id="forma-otro" name="forma-otro" oninput="handleOtherInput(this)"></label>
+                </div>
               </div>
-          </div>
+          
   
           <!-- Sección de Porciones -->
           <div class="section">
@@ -42,7 +52,7 @@
                   <label class="labelOp"><input type="radio" name="porciones" value="15-20"> 15 - 20</label>
                   <label class="labelOp"><input type="radio" name="porciones" value="20-25"> 20 - 25</label>
                   <label class="labelOp"><input type="radio" name="porciones" value="25-30"> 25 - 30</label>
-                  <label class="labelOp">Otro: <input type="text" id="mensage-porciones" name="mensaje"></label>
+                  <label class="labelOp">Otro: <input type="text" id="porciones-otro" name="porciones" oninput="handleOtherInput(this)"></label>
               </div>
           </div>
   
@@ -54,7 +64,7 @@
                   <label class="labelOp"><input type="radio" name="relleno" value="manjar"> Manjar</label>
                   <label class="labelOp"><input type="radio" name="relleno" value="crema-pastelera"> Crema Pastelera</label>
                   <label class="labelOp"><input type="radio" name="relleno" value="frutas"> Frutas</label>
-                  <label class="labelOp">Otro: <input type="text" id="mensage_relleno" name="mensaje"></label>
+                  <label class="labelOp">Otro: <input type="text" id="relleno-otro" name="relleno" oninput="handleOtherInput(this)"></label>
               </div>
           </div>
   
@@ -65,7 +75,7 @@
                   <label class="labelOp"><input type="radio" name="cubierta" value="chantilly"> Chantilly</label>
                   <label class="labelOp"><input type="radio" name="cubierta" value="fondant"> Fondant</label>
                   <label class="labelOp"><input type="radio" name="cubierta" value="crema-batida"> Crema batida</label>
-                  <label class="labelOp">Otro: <input type="text" id="mensage-cubierta" name="mensaje"></label>
+                  <label class="labelOp">Otro: <input type="text" id="cubierta-otro" name="cubierta" oninput="handleOtherInput(this)"></label>
               </div>
           </div>
   
@@ -76,7 +86,7 @@
                   <label class="labelOp"><input type="radio" name="distribucion" value="1-nivel"> 1 Nivel</label>
                   <label class="labelOp"><input type="radio" name="distribucion" value="2-niveles"> 2 Niveles</label>
                   <label class="labelOp"><input type="radio" name="distribucion" value="3-niveles"> 3 Niveles</label>
-                  <label class="labelOp">Otro: <input type="text" id="mensage-distribucion" name="mensaje"></label>
+                  <label class="labelOp">Otro: <input type="text" id="distribucion-otro" name="distribucion" oninput="handleOtherInput(this)"></label>
               </div>
           </div>
   
@@ -89,9 +99,14 @@
                   <label class="labelOp"><input type="checkbox" name="decoracion" value="flores"> Flores</label>
                   <label class="labelOp"><input type="checkbox" name="decoracion" value="grageas"> Grageas</label>
                   <label class="labelOp"><input type="checkbox" name="decoracion" value="chispas-de-chocolate"> Chispas de chocolate</label>
-                  <label class="labelOp">Otros: <input type="text" id="mensage-decoracion" name="mensaje"></label>
+                  <label class="labelOp">Otros: <input type="text" id="decoracion-otro" name="decoracion" oninput="handleOtherInput(this)"></label>
               </div>
           </div>
+
+          <div class="section">
+            <label class="labelForm">Colores:</label>
+            <input type="text" id="color" name="color">
+        </div>
   
           <!-- Sección de Texto o mensaje -->
           <div class="section">
@@ -99,38 +114,29 @@
               <input type="text" id="mensage-texto" name="mensaje">
           </div>
   
-          <!-- Sección de Personalización adicional -->
-          <div class="section">
-              <label class="labelForm">Personalización adicional:</label>
-              <input type="text" id="mensage-personalizacion" name="mensaje">
-          </div>
+         
+          
   
           <!-- Botón de enviar -->
           <div class="section">
-              <button type="submit" id="submitBtn" class="opciones">Generar Pastel</button>
+              <button type="button" onclick="handleSubmitForm()" class="opciones">Generar Pastel</button>
           </div>
       </form>
+
+      <div id="popup" style="display:none;">
+        <h3>Selecciona una imagen:</h3>
+        <div id="imageOptions">
+
+        </div>
+        <button onclick="closePopup()">Cerrar</button>
+        <button id="whatsappBtn" style="display:none;" onclick="redirectToWhatsApp()">Enviar por WhatsApp</button>
+    </div>
+
   </div>
 
   <!-- Agregar un campo oculto para el pastelero -->
 <input type="hidden" id="pastelero_id" name="pastelero_id" value="PASTELERO_ID">
 
-<!-- Mostrar las imágenes generadas -->
-<div id="imagenes-generadas" style="display: none;">
-    <h3>Selecciona una imagen:</h3>
-    <div id="imagenes-container"></div>
-    <button type="button" id="seleccionar-imagen-btn">Seleccionar Imagen</button>
-</div>
-
-<!-- Botón para enviar a WhatsApp -->
-<button type="button" id="whatsapp-btn" style="display: none;">Contactar al Pastelero</button>
-
-<!-- Mensaje después de generar -->
-<div id="shareMessage" style="display:none;">
-    <p>Selecciona una imagen para compartir en WhatsApp:</p>
-    <div id="generatedImages"></div>
-    <button id="shareBtn" style="display:none;">Compartir en WhatsApp</button>
-</div>
 
 
 {% endblock %}

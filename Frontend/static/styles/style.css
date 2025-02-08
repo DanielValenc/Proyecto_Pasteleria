@@ -43,6 +43,7 @@ html, body {
 .titulo{
     font-family: 'Dancing Script', cursive;
     font-size: 35px;
+    color: #3d0c08;
 }
 .imgLogo{
     width: 65px;
@@ -84,6 +85,11 @@ html, body {
 
 .labelR{
     color:#ec7879;
+}
+
+
+.homeRef{
+text-decoration: none;
 }
 
 /* Eliminar puntos o estilo de lista */

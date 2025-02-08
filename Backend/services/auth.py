@@ -1,8 +1,10 @@
 from passlib.context import CryptContext
 from datetime import datetime, timedelta
 import jwt
+from requests import Session
 from Backend.config import ALGORITHM,SECRET_KEY, ACCESS_TOKEN_EXPIRE_MINUTES
 from Backend.database import SessionLocal
+from Backend.models import User
 
 
 # Configuración de seguridad
@@ -29,3 +31,9 @@ def get_db():
     finally:
         db.close()
     pass
+
+def authenticate_user(db: Session, username: str, password: str):
+    user = db.query(User).filter(User.email == username).first()  # Usa email si en tu base de datos es 'email'
+    if not user or not verify_password(password, user.hashed_password):
+        return None
+    return user

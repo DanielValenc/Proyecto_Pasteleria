@@ -1,15 +1,13 @@
 import httpx
-from Backend.models import CakeCustomizationRequest
-from Backend.services.b2_storage import upload_to_b2
+from Backend.schemas.modelDataCake import cakeDataRequest
 from Backend.config import API_URL,API_KEY
 from fastapi import HTTPException
 
 
-async def generate_cake_image(request: CakeCustomizationRequest):
-    prompt = ( f"Diseña un pastel con la siguiente información: La forma del pastel es {request.forma}, "
+async def generate_cake_image(request: cakeDataRequest):
+    prompt = ( f"Diseña un pastel con la siguiente información:La temática del pastel tiene {request.tematica} La forma del pastel es {request.forma}, "
                f"con {request.porciones} porciones. Tiene una cubierta de {request.cubierta} y va tener una distribución de {request.distribucion}."
-               f"La decoración incluye {',' .join(request.decoracion)}. Además, lleva un mensaje que dice: {request.mensajePastel}"
-               f"Se debe incluir la siguiente personalización: {request.personalizacion}. "
+               f"La decoración incluye {',' .join(request.decoracion)} combinado con los siguientes colores {request.color}. Además, lleva un mensaje que dice: {request.mensaje}"
                f"El diseño debe ser factible para un pastelero profesional y visualmente atractivo."
              )
 
@@ -20,22 +18,32 @@ async def generate_cake_image(request: CakeCustomizationRequest):
         "width": 512,
         "height": 512,
     }
-    headers = {"accept": "application/json", "authorization": f"Bearer {API_KEY}", "content-type": "application/json"}
+    
+    headers = {
+        "accept": "application/json",
+        "authorization": f"Bearer {API_KEY}",
+        "content-type": "application/json"
+    }
 
     async with httpx.AsyncClient() as client:
         response = await client.post(API_URL, json=payload, headers=headers)
-    
+
     if response.status_code != 200:
         raise HTTPException(status_code=response.status_code, detail=response.text)
-    
+
     result = response.json()
-    
-    generation_id = result.get("sdGenerationJob", {}).get("generationId")
-    
-    if not generation_id:
-        raise HTTPException(status_code=500, detail="No se recibió el generation_id.")
-    
-    return {"generation_id": generation_id}
+
+    # Suponiendo que la respuesta contiene una lista de URLs de imágenes
+    image_urls = result.get("imageUrls")  # Esto debe ser una lista de URLs
+
+    print(image_urls)
+
+    if not image_urls:
+        raise HTTPException(status_code=500, detail="No se recibieron URLs de imágenes.")
+
+    return {"image_urls": image_urls}
+
+
 
 async def check_generation_status(generation_id: str):
     url = f"{API_URL}/{generation_id}"
