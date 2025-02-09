@@ -17,103 +17,36 @@
 
         <div class="section">
             <label class="labelForm">Temática:</label>
-            <input type="text" id="tematica" name="tematica">
+            <input type="text" id="tematica" name="tematica" placeholder="Ej. Safari, Boda con rosas blancas, Fresa" required>
         </div>
           <!-- Sección de Sabor -->
           <div class="section">
-              <label class="labelForm">Sabor:</label>
-              <div id="grupoForma">
-                  <label class="labelOp"><input type="radio" name="sabor" value="vainilla"> Vainilla</label>
-                  <label class="labelOp"><input type="radio" name="sabor" value="chocolate"> Chocolate</label>
-                  <label class="labelOp"><input type="radio" name="sabor" value="marmoleado"> Marmoleado</label>
-                  <label class="labelOp">Otro: <input type="text" id="sabor-otro" name="sabor-otro" oninput="handleOtherInput(this)"></label>
-                </div>
+            <label for="cake-type">Tipo de pastel:</label>
+            <input type="text" id="cake-type" name="cake_type" placeholder="Ej. Chocolate, Vainilla, Fresa" required>
               </div>
           
   
           <!-- Sección de Forma del pastel -->
           <div class="section">
-              <label class="labelForm">Forma del pastel:</label>
-              <div id="grupoForma">
-                  <label class="labelOp"><input type="radio" name="forma" value="corazón">  Corazón</label>
-                  <label class="labelOp"><input type="radio" name="forma" value="cuadrado">  Cuadrado</label>
-                  <label class="labelOp"><input type="radio" name="forma" value="círculo">  Círculo</label>
-                  <label class="labelOp">Otro: <input type="text" id="forma-otro" name="forma-otro" oninput="handleOtherInput(this)"></label>
-                </div>
+            <label for="cake-size">Tamaño:</label>
+            <input type="text" id="cake-size" name="cake_size" placeholder="Ej. Pequeño, Mediano, Grande" required>
               </div>
           
   
           <!-- Sección de Porciones -->
           <div class="section">
-              <label class="labelForm">Porciones:</label>
-              <div id="grupoForma">
-                  <label class="labelOp"><input type="radio" name="porciones" value="4-10"> 4 - 10</label>
-                  <label class="labelOp"><input type="radio" name="porciones" value="10-12"> 10 - 12</label>
-                  <label class="labelOp"><input type="radio" name="porciones" value="15-20"> 15 - 20</label>
-                  <label class="labelOp"><input type="radio" name="porciones" value="20-25"> 20 - 25</label>
-                  <label class="labelOp"><input type="radio" name="porciones" value="25-30"> 25 - 30</label>
-                  <label class="labelOp">Otro: <input type="text" id="porciones-otro" name="porciones" oninput="handleOtherInput(this)"></label>
-              </div>
+            <label for="decoration">Decoración:</label>
+            <input type="text" id="decoration" name="decoration" placeholder="Ej. Flores, Fondant, Chocolate" required>
           </div>
   
           <!-- Sección de Relleno -->
           <div class="section">
-              <label class="labelForm">Relleno:</label>
-              <div id="grupoForma">
-                  <label class="labelOp"><input type="radio" name="relleno" value="chocolate"> Chocolate</label>
-                  <label class="labelOp"><input type="radio" name="relleno" value="manjar"> Manjar</label>
-                  <label class="labelOp"><input type="radio" name="relleno" value="crema-pastelera"> Crema Pastelera</label>
-                  <label class="labelOp"><input type="radio" name="relleno" value="frutas"> Frutas</label>
-                  <label class="labelOp">Otro: <input type="text" id="relleno-otro" name="relleno" oninput="handleOtherInput(this)"></label>
-              </div>
+            <label for="message">Mensaje (opcional):</label>
+            <input type="text" id="message" name="message" placeholder="Ej. ¡Feliz Cumpleaños!" >
           </div>
   
-          <!-- Sección de Cubierta -->
-          <div class="section">
-              <label class="labelForm">Cubierta:</label>
-              <div id="grupoForma">
-                  <label class="labelOp"><input type="radio" name="cubierta" value="chantilly"> Chantilly</label>
-                  <label class="labelOp"><input type="radio" name="cubierta" value="fondant"> Fondant</label>
-                  <label class="labelOp"><input type="radio" name="cubierta" value="crema-batida"> Crema batida</label>
-                  <label class="labelOp">Otro: <input type="text" id="cubierta-otro" name="cubierta" oninput="handleOtherInput(this)"></label>
-              </div>
-          </div>
-  
-          <!-- Sección de Distribución -->
-          <div class="section">
-              <label class="labelForm">Distribución:</label>
-              <div id="grupoForma">
-                  <label class="labelOp"><input type="radio" name="distribucion" value="1-nivel"> 1 Nivel</label>
-                  <label class="labelOp"><input type="radio" name="distribucion" value="2-niveles"> 2 Niveles</label>
-                  <label class="labelOp"><input type="radio" name="distribucion" value="3-niveles"> 3 Niveles</label>
-                  <label class="labelOp">Otro: <input type="text" id="distribucion-otro" name="distribucion" oninput="handleOtherInput(this)"></label>
-              </div>
-          </div>
-  
-          <!-- Sección de Decoración -->
-          <div class="section">
-              <label class="labelForm">Decoración:</label>
-              <div id="grupoForma">
-                  <label class="labelOp"><input type="checkbox" name="decoracion" value="perlas-comestibles"> Perlas comestibles</label>
-                  <label class="labelOp"><input type="checkbox" name="decoracion" value="frutas"> Frutas</label>
-                  <label class="labelOp"><input type="checkbox" name="decoracion" value="flores"> Flores</label>
-                  <label class="labelOp"><input type="checkbox" name="decoracion" value="grageas"> Grageas</label>
-                  <label class="labelOp"><input type="checkbox" name="decoracion" value="chispas-de-chocolate"> Chispas de chocolate</label>
-                  <label class="labelOp">Otros: <input type="text" id="decoracion-otro" name="decoracion" oninput="handleOtherInput(this)"></label>
-              </div>
-          </div>
-
-          <div class="section">
-            <label class="labelForm">Colores:</label>
-            <input type="text" id="color" name="color">
-        </div>
-  
-          <!-- Sección de Texto o mensaje -->
-          <div class="section">
-              <label class="labelForm">Texto o mensaje:</label>
-              <input type="text" id="mensage-texto" name="mensaje">
-          </div>
-  
+           
+         
          
           
   

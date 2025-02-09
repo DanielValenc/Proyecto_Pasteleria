@@ -3,10 +3,9 @@ from pydantic import BaseModel
 
 class cakeDataRequest(BaseModel):
     tematica: str
-    forma: str
-    porciones:str
-    cubierta: str
-    distribucion:str
-    decoracion: str
-    color: str
-    mensaje:str
+    cake_type: str
+    cake_size: str
+    decoration: str
+    message: str
+    
+  

@@ -1,114 +1,65 @@
-function handleOtherInput(input) {
-    const parent = input.closest('.section');
-    const radioButtons = parent.querySelectorAll(`input[type="radio"][name="${input.name.split('-')[0]}"]`);
+function handleSubmitForm() {
+    const tematica = document.getElementById('tematica').value;
+    const cakeType = document.getElementById('cake-type').value;
+    const cakeSize = document.getElementById('cake-size').value;
+    const decoration = document.getElementById('decoration').value;
+    const message = document.getElementById('message').value;
 
-    if (input.value.trim() !== '') {
-        radioButtons.forEach(radio => {
-            radio.disabled = true;
-        });
-    } else {
-        radioButtons.forEach(radio => {
-            radio.disabled = false;
-        });
-    }
-}
+    const data = {
+        tematica: tematica,
+        cake_type: cakeType,
+        cake_size: cakeSize,
+        decoration: decoration,
+        message: message
+    };
 
-function submitForm() {
-    const formElements = document.forms["cakeForm"].elements;
-    let formData = {};
+    fetch('/generate/', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(data)
+    })
+        .then(response => response.json())
+        .then(data => {
+            console.log('Success:', data);
 
-    for (let element of formElements) {
-        const name = element.name.split('-')[0];
-
-        // Si es un input de texto y tiene un valor
-        if (element.type === 'text' && element.value.trim() !== '') {
-            if (!formData[name]) {
-                formData[name] = []; // Crea un array si no existe
-            } else if (!Array.isArray(formData[name])) {
-                formData[name] = [formData[name]]; // Convierte a array si es un string
+            // Asegúrate de que la respuesta contenga las URLs de las imágenes
+            if (data.generated_images && data.generated_images.length > 0) {
+                const imageUrls = data.generated_images.map(image => image.url);
+                console.log(imageUrls)
+                showImagesPopup(imageUrls);  // Llama a la función para mostrar las imágenes en el popup
+            } else {
+                console.error('No se encontraron imágenes generadas.');
             }
-            formData[name].push(element.value.trim()); // Agrega el valor del input al array
-        }
-        // Si es un checkbox y está seleccionado
-        else if (element.type === 'checkbox' && element.checked) {
-            if (!formData[name]) {
-                formData[name] = []; // Crea un array si no existe
-            } else if (!Array.isArray(formData[name])) {
-                formData[name] = [formData[name]]; // Convierte a array si es un string
-            }
-            formData[name].push(element.value.trim()); // Agrega el valor del checkbox al array
-        }
-        // Si es un radio button y está seleccionado
-        else if (element.type === 'radio' && element.checked) {
-            formData[name] = element.value.trim(); // Asigna directamente el valor del radio
-        }
-    }
-
-    // Convertir los arrays en cadenas legibles (opcional)
-    for (let key in formData) {
-        if (Array.isArray(formData[key])) {
-            formData[key] = formData[key].join(", "); // Convierte arrays en strings
-        }
-    }
-
-    let jsonData = JSON.stringify(formData); // Convertir a JSON
-    
-
-    return jsonData; // Devolver el JSON en formato de string
-}
-
-
-// Llamar a la función submitForm para enviar el formulario y generar las imágenes
-async function handleSubmitForm() {
-    const jsonData = submitForm(); // Obtener los datos del formulario como JSON
-    console.log("Datos JSON antes de enviar:", jsonData);
-
-    // Enviar los datos al backend para generar las imágenes
-    try {
-        const response = await fetch('/generate/', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: jsonData
+        })
+        .catch((error) => {
+            console.error('Error:', error);
         });
-    
-        if (!response.ok) {
-            throw new Error('Error en la generación de imágenes');
-        }
-    
-        const data = await response.json();
-        
-        const imageUrls = data.image_urls;
-        
-        showImagesPopup(imageUrls);
-    } catch (error) {
-        console.error('Error:', error);
-        alert('Hubo un problema al generar las imágenes. Intenta de nuevo.');
-    }
 }
 
-// Mostrar las imágenes en una ventana emergente
+
+
+
 function showImagesPopup(imageUrls) {
     const popup = document.getElementById("popup");
     const imageOptions = document.getElementById("imageOptions");
 
-    // Limpiar el contenedor de imágenes
+    // Limpiar el contenedor de imágenes antes de agregar nuevas
     imageOptions.innerHTML = '';
 
-    // Crear imágenes a partir de las URLs
+    // Crear imágenes a partir de las URLs recibidas
     imageUrls.forEach((url, index) => {
-        if(url){
-        const img = document.createElement("img");
-        img.src = url;
-        img.alt = `Imagen ${index + 1}`;
-        img.style.width = "150px";
-        img.style.margin = "10px";
-        img.onclick = () => selectImage(url);  // Seleccionar la imagen cuando se haga clic
+        if (url) {
+            const img = document.createElement("img");
+            img.src = url;
+            img.alt = `Imagen ${index + 1}`;
+            img.style.width = "150px";
+            img.style.margin = "10px";
+            img.onclick = () => selectImage(url);  // Seleccionar la imagen cuando se haga clic
 
-        // Agregar la imagen al contenedor
-        imageOptions.appendChild(img);
-
+            // Agregar la imagen al contenedor
+            imageOptions.appendChild(img);
         }
     });
 
