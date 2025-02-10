@@ -1,12 +1,13 @@
 import bcrypt
 from fastapi.templating import Jinja2Templates
-from fastapi.responses import HTMLResponse, RedirectResponse
-from fastapi import  Depends, HTTPException, Request 
+from fastapi.responses import HTMLResponse, JSONResponse, RedirectResponse
+from fastapi import  Depends, Form, Request 
 from fastapi import APIRouter
+from pydantic import EmailStr
 from sqlalchemy.orm import Session
 from Backend.db.database import get_db
 from Backend.models.user_model import UsersRequest
-from Backend.schemas.schema_user import LoginRequest
+
 
 route = APIRouter()
 
@@ -21,12 +22,17 @@ async def index(request: Request):
 
 @route.post("/login/")
 async def login_usuario(
-    user: LoginRequest,
+    correo: EmailStr = Form(...),
+    password: str = Form(...),
     db: Session = Depends(get_db)
 ):
-    usuario = db.query(UsersRequest).filter(UsersRequest.correo == user.correo).first()
+    usuario = db.query(UsersRequest).filter(UsersRequest.correo == correo).first()
 
-    if usuario and usuario.password == user.password:  # Aquí puedes verificar también el hash de la contraseña
-        return {"mensaje": "Inicio de sesión exitoso"}
-    else:
-        return {"error": "Credenciales incorrectas"}
+    
+    if not usuario:
+        return JSONResponse(content={"error": "Usuario no encontrado"}, status_code=404)
+
+    if usuario.password != password:  # Asegúrate de verificar con hash si usas bcrypt
+        return JSONResponse(content={"error": "Contraseña incorrecta"}, status_code=401)
+
+    return JSONResponse(content={"message": "Inicio de sesión exitoso"}, status_code=200)

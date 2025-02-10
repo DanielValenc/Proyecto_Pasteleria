@@ -1,6 +1,6 @@
 
 from fastapi import APIRouter, Depends, Request, Form
-from fastapi.responses import HTMLResponse, RedirectResponse
+from fastapi.responses import HTMLResponse, JSONResponse, RedirectResponse
 from fastapi.templating import Jinja2Templates
 from sqlalchemy.orm import Session
 from Backend.db.database import get_db
@@ -25,11 +25,14 @@ async def registrar_usuario(
     password: str = Form(...),
     db: Session = Depends(get_db)
 ):
-    # Verificar si el correo ya existe
+   # Validación de campos vacíos
+    if not nombre.strip() or not apellido.strip() or not celular.strip() or not correo.strip() or not password.strip():
+        return JSONResponse(content={"error": "Todos los campos son requeridos."}, status_code=400)
+
+    # Verificar si el correo ya está registrado
     usuario_existente = db.query(UsersRequest).filter(UsersRequest.correo == correo).first()
-    
     if usuario_existente:
-        return {"error": "El correo ya está registrado."}
+        return JSONResponse(content={"error": "El correo ya está registrado."}, status_code=400)
 
     nuevo_usuario = UsersRequest(
         nombre=nombre,
@@ -42,7 +45,7 @@ async def registrar_usuario(
     db.commit()
     db.refresh(nuevo_usuario)
      # Redirigir al usuario al login después de registrarse
-    return RedirectResponse(url="/login/", status_code=303)
-
+    # Si el registro fue exitoso, devolvemos un mensaje de éxito
+    return JSONResponse(content={"message": "Usuario registrado correctamente"}, status_code=200)
 
 

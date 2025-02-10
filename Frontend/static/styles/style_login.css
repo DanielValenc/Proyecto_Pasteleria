@@ -59,4 +59,27 @@ body#login, html {
     font-family: 'Slabo 27px', serif;
   }
 
-  
+  /* Cambiar el título */
+.swal-title {
+  font-family: 'Slabo 27px', serif;/* Cambiar la fuente del título */
+  font-size: 25px;  /* Cambiar el tamaño del texto del título */
+  color: #ff5733;  /* Cambiar el color del título */
+}
+
+/* Cambiar el contenido */
+.swal-content {
+  font-family: 'Slabo 27px', serif; /* Cambiar la fuente del contenido */
+  font-size: 16px;  /* Cambiar el tamaño del texto */
+  color: #3d0c08;  /* Cambiar el color del texto */
+  text-align: center; /* Centrar el texto */
+}
+
+/* Cambiar el botón */
+.swal-button {
+  background-color: #3d0c08;  /* Cambiar el color de fondo del botón */
+  color: white;  /* Cambiar el color del texto del botón */
+  font-family: 'Slabo 27px', serif; /* Cambiar la fuente del botón */
+  font-size: 14px;  /* Cambiar el tamaño de la fuente del botón */
+  padding: 10px 20px;  /* Ajustar el relleno del botón */
+  border-radius: 5px;  /* Bordes redondeados del botón */
+}
