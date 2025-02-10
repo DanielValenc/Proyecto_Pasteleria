@@ -13,8 +13,10 @@ DB_HOST = os.getenv("DB_HOST")
 DB_PORT = os.getenv("DB_PORT")
 
 B2_KEY_ID = os.getenv("B2_KEY_ID")
-B2_APPLICATION_KEY = os.getenv("B2_APPLICATION_KEY")
-BUCKET_NAME = os.getenv("BUCKET_NAME")
+B2_APP_KEY = os.getenv("B2_APP_KEY")
+B2_BUCKET_ID = os.getenv("B2_BUCKET_ID")
+B2_BUCKET_NAME = os.getenv("B2_BUCKET_NAME")
+B2_ENDPOINT_URL = os.getenv("B2_ENDPOINT_URL")
 
 
 

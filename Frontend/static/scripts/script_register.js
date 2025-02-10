@@ -9,6 +9,7 @@ document.querySelector("form").addEventListener("submit", async function(event) 
     });
 
     let data = await response.json();
+    console.log(data); // Para ver el contenido de la respuesta
 
     if (!response.ok) {
         // Si hay un error, muestra la ventana emergente con el mensaje

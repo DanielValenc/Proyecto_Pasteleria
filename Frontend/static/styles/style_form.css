@@ -93,3 +93,11 @@ select {
     margin-left: 40px;
     
 }
+
+/* Estilo para la imagen seleccionada */
+#imageOptions img.selected {
+    border: 3px solid #ff416c; /* Verde para indicar selección */
+    filter: brightness(80%);
+    transform: scale(1.1);
+    transition: all 0.2s ease-in-out;
+}

@@ -41,6 +41,25 @@ function handleSubmitForm() {
 
 
 
+// Función para seleccionar una imagen
+let selectedImage = null;
+
+function selectImage(url, imgElement) {
+    selectedImage = url;
+
+    // Remover la clase "selected" de todas las imágenes antes de seleccionar otra
+    document.querySelectorAll("#imageOptions img").forEach(img => {
+        img.classList.remove("selected");
+    });
+
+    // Agregar la clase "selected" a la imagen actual
+    imgElement.classList.add("selected");
+
+    // Mostrar el botón de WhatsApp solo después de seleccionar una imagen
+    document.getElementById("whatsappBtn").style.display = "block";
+}
+
+// Modificar la función para mostrar imágenes y agregar eventos de selección
 function showImagesPopup(imageUrls) {
     const popup = document.getElementById("popup");
     const imageOptions = document.getElementById("imageOptions");
@@ -56,7 +75,7 @@ function showImagesPopup(imageUrls) {
             img.alt = `Imagen ${index + 1}`;
             img.style.width = "150px";
             img.style.margin = "10px";
-            img.onclick = () => selectImage(url);  // Seleccionar la imagen cuando se haga clic
+            img.onclick = () => selectImage(url, img);  // Seleccionar la imagen al hacer clic
 
             // Agregar la imagen al contenedor
             imageOptions.appendChild(img);
@@ -66,25 +85,33 @@ function showImagesPopup(imageUrls) {
     // Mostrar el popup
     popup.style.display = "block";
 }
-
-// Función para seleccionar una imagen
-let selectedImage = null;
-function selectImage(url) {
-    selectedImage = url;
-    // Mostrar el botón de WhatsApp solo después de seleccionar una imagen
-    document.getElementById("whatsappBtn").style.display = "block";
-}
-
-// Cerrar el popup
-function closePopup() {
-    document.getElementById("popup").style.display = "none";
-}
-
 // Redirigir al usuario a WhatsApp con la imagen seleccionada
-function redirectToWhatsApp() {
+async function redirectToWhatsApp() {
     if (selectedImage) {
-        const message = `Mira este diseño de pastel: ${selectedImage}`;
-        const whatsappUrl = `https://wa.me/?text=${encodeURIComponent(message)}`;
-        window.open(whatsappUrl, '_blank');
+        try {
+            // Obtener el correo del usuario (debe ser dinámico en el backend)
+            const userEmail = "dayalex9@hotmail.com";
+
+            // Enviar la URL de la imagen seleccionada al backend para subirla
+            const response = await fetch("/upload_image_and_redirect/", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ imageUrl: selectedImage, userEmail: userEmail })
+            });
+
+            const data = await response.json();
+            if (response.ok && data.uploadedImageUrl) {
+                // Crear el mensaje con la URL de la imagen subida
+                const message = `Mira este diseño de pastel: ${data.uploadedImageUrl}`;
+                const whatsappUrl = `https://wa.me/?text=${encodeURIComponent(message)}`;
+
+                // Redirigir a WhatsApp
+                window.open(whatsappUrl, '_blank');
+            } else {
+                alert("Error al subir la imagen.");
+            }
+        } catch (error) {
+            console.error("Error al subir la imagen:", error);
+        }
     }
 }

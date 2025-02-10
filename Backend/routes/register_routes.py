@@ -5,6 +5,7 @@ from fastapi.templating import Jinja2Templates
 from sqlalchemy.orm import Session
 from Backend.db.database import get_db
 from Backend.models.user_model import UsersRequest
+from Backend.services.b2_storage import create_backblaze_folder
 
 route = APIRouter()
 
@@ -25,7 +26,7 @@ async def registrar_usuario(
     password: str = Form(...),
     db: Session = Depends(get_db)
 ):
-   # Validación de campos vacíos
+    # Validación de campos vacíos
     if not nombre.strip() or not apellido.strip() or not celular.strip() or not correo.strip() or not password.strip():
         return JSONResponse(content={"error": "Todos los campos son requeridos."}, status_code=400)
 
@@ -34,6 +35,7 @@ async def registrar_usuario(
     if usuario_existente:
         return JSONResponse(content={"error": "El correo ya está registrado."}, status_code=400)
 
+    # Crear el nuevo usuario
     nuevo_usuario = UsersRequest(
         nombre=nombre,
         apellido=apellido,
@@ -44,8 +46,9 @@ async def registrar_usuario(
     db.add(nuevo_usuario)
     db.commit()
     db.refresh(nuevo_usuario)
-     # Redirigir al usuario al login después de registrarse
+
+    # Crear la "carpeta" en Backblaze para este usuario
+    create_backblaze_folder(correo,db)
+
     # Si el registro fue exitoso, devolvemos un mensaje de éxito
     return JSONResponse(content={"message": "Usuario registrado correctamente"}, status_code=200)
-
-
