@@ -1,12 +1,12 @@
+import bcrypt
 from fastapi.templating import Jinja2Templates
-from fastapi.responses import HTMLResponse
-from fastapi import  Request 
-from fastapi import APIRouter, HTTPException, Depends
-from Backend.models import UserCreate, LoginRequest
-from Backend.services.auth import create_access_token, get_db, authenticate_user
-from Backend.models import User
+from fastapi.responses import HTMLResponse, RedirectResponse
+from fastapi import  Depends, HTTPException, Request 
+from fastapi import APIRouter
 from sqlalchemy.orm import Session
-from fastapi import Form
+from Backend.db.database import get_db
+from Backend.models.user_model import UsersRequest
+from Backend.schemas.schema_user import LoginRequest
 
 route = APIRouter()
 
@@ -18,14 +18,15 @@ templates = Jinja2Templates(directory="Frontend/templates")
 async def index(request: Request):
     return templates.TemplateResponse("login.html",{"request": request})
 
+
 @route.post("/login/")
-async def login(request: Request, username: str = Form(...), password: str = Form(...), db: Session = Depends(get_db)):
-    if not username or not password:
-        return templates.TemplateResponse("login.html", {"request": request, "error": "Email y contraseña son requeridos."})
+async def login_usuario(
+    user: LoginRequest,
+    db: Session = Depends(get_db)
+):
+    usuario = db.query(UsersRequest).filter(UsersRequest.correo == user.correo).first()
 
-    user = authenticate_user(db, username, password)
-    if not user:
-        return templates.TemplateResponse("login.html", {"request": request, "error": "Usuario o contraseña incorrectos."})
-
-    access_token = create_access_token({"sub": user.username})
-    return {"access_token": access_token}
+    if usuario and usuario.password == user.password:  # Aquí puedes verificar también el hash de la contraseña
+        return {"mensaje": "Inicio de sesión exitoso"}
+    else:
+        return {"error": "Credenciales incorrectas"}

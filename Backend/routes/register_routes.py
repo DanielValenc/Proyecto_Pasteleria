@@ -1,10 +1,10 @@
-from fastapi import APIRouter, HTTPException, Depends, Request
+
+from fastapi import APIRouter, Depends, Request, Form
 from fastapi.responses import HTMLResponse, RedirectResponse
 from fastapi.templating import Jinja2Templates
-from Backend.models import UserCreate, LoginRequest
-from Backend.services.auth import create_access_token, get_db, verify_password,get_password_hash
-from Backend.models import User
 from sqlalchemy.orm import Session
+from Backend.db.database import get_db
+from Backend.models.user_model import UsersRequest
 
 route = APIRouter()
 
@@ -16,14 +16,33 @@ async def index(request: Request):
     return templates.TemplateResponse("register.html",{"request": request})
 
 
-
-
 @route.post("/register/")
-async def register(user_data: UserCreate, db: Session = Depends(get_db)):
-    try:
-        # Aquí deberías agregar la lógica para crear el usuario en la base de datos
-        # por ejemplo, utilizando el modelo UserCreate para validar los datos
-        user = create_user(db, user_data)  # Tu lógica para crear un usuario
-        return {"message": "Usuario registrado correctamente"}
-    except Exception as e:
-        raise HTTPException(status_code=400, detail=f"Error: {str(e)}")
+async def registrar_usuario(
+    nombre: str = Form(...),
+    apellido: str = Form(...),
+    celular: str = Form(...),
+    correo: str = Form(...),
+    password: str = Form(...),
+    db: Session = Depends(get_db)
+):
+    # Verificar si el correo ya existe
+    usuario_existente = db.query(UsersRequest).filter(UsersRequest.correo == correo).first()
+    
+    if usuario_existente:
+        return {"error": "El correo ya está registrado."}
+
+    nuevo_usuario = UsersRequest(
+        nombre=nombre,
+        apellido=apellido,
+        celular=celular,
+        correo=correo,
+        password=password  # Aquí puedes agregar el hash si decides hacerlo
+    )
+    db.add(nuevo_usuario)
+    db.commit()
+    db.refresh(nuevo_usuario)
+     # Redirigir al usuario al login después de registrarse
+    return RedirectResponse(url="/login/", status_code=303)
+
+
+

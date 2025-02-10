@@ -1,8 +1,8 @@
 from io import BytesIO
 from fastapi.responses import StreamingResponse
 import httpx
-from Backend.schemas.modelDataCake import cakeDataRequest
-from Backend.config import API_URL,API_KEY
+from Backend.schemas.schema_cake import cakeDataRequest
+from Backend.utils.config import API_URL,API_KEY
 from fastapi import HTTPException
 import time
 

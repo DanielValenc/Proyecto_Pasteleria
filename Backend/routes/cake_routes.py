@@ -1,6 +1,6 @@
 from fastapi import APIRouter, HTTPException, Request
 from fastapi.responses import HTMLResponse
-from Backend.schemas.modelDataCake import cakeDataRequest
+from Backend.schemas.schema_cake import cakeDataRequest
 from Backend.services.image_generator import generate_cake_image, check_status
 from fastapi.templating import Jinja2Templates
 

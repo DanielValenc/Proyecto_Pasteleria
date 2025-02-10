@@ -1,5 +1,5 @@
 from b2sdk.v2 import InMemoryAccountInfo, B2Api
-from Backend.config import B2_KEY_ID, B2_APPLICATION_KEY ,BUCKET_NAME
+from Backend.utils.config import B2_KEY_ID, B2_APPLICATION_KEY ,BUCKET_NAME
 
 
 info = InMemoryAccountInfo()
