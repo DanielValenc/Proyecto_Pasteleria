@@ -21,7 +21,7 @@ document.querySelector("form").addEventListener("submit", async function(event) 
             background: "linear-gradient(120deg, #ec7879, #fff)",
             color: "#3d0c08",
             width: "400px", // Tamaño más pequeño de la ventana
-            heigth:" 200px",
+            heigth: "200px",
             padding: "20px", // Añadir padding para que el contenido no quede pegado
             confirmButtonColor: "#3d0c08",
             confirmButtonText: "Ok",
@@ -32,7 +32,13 @@ document.querySelector("form").addEventListener("submit", async function(event) 
             }
         });
     } else {
-        // Si el login es exitoso, redirige directamente a la página home
-        window.location.href = "/home/";  // Redirige a la página principal
+        // Si el login es exitoso, verifica el rol y redirige
+        if (data.role === "cliente") {
+            window.location.href = "/cliente/panel";  // Redirige a la página de cliente
+        } else if (data.role === "pastelero") {
+            window.location.href = "/pastelero/panel";  // Redirige a la página de pastelero
+        } else {
+            window.location.href = "/login/";  // Si no es cliente ni pastelero, redirige a home
+        }
     }
 });

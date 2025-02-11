@@ -3,6 +3,10 @@ document.querySelector("form").addEventListener("submit", async function(event) 
 
     let formData = new FormData(this);
 
+    // Asegúrate de que el valor del tipo de usuario esté incluido
+    let userType = document.querySelector("#userType").value;
+    formData.append("userType", userType);
+
     let response = await fetch("/register/", {
         method: "POST",
         body: formData
@@ -19,15 +23,15 @@ document.querySelector("form").addEventListener("submit", async function(event) 
             icon: "error",
             background: "linear-gradient(120deg, #ec7879, #fff)",
             color: "#3d0c08",
-            width: "400px", // Tamaño más pequeño de la ventana
-            height: "200px", // Corregir 'heigth' a 'height'
-            padding: "20px", // Añadir padding para que el contenido no quede pegado
+            width: "400px",
+            height: "200px",
+            padding: "20px",
             confirmButtonColor: "#3d0c08",
             confirmButtonText: "Ok",
             customClass: {
-                title: 'swal-title',  // Cambiar estilo solo del título
-                content: 'swal-content',  // Cambiar estilo solo del contenido
-                confirmButton: 'swal-button'  // Cambiar estilo solo del botón
+                title: 'swal-title', 
+                content: 'swal-content', 
+                confirmButton: 'swal-button' 
             }
         });
     } else {

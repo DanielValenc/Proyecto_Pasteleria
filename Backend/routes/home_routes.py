@@ -7,7 +7,7 @@ from fastapi import  Request
 route = APIRouter()
 
 
-templates = Jinja2Templates(directory="Frontend/templates")
+templates = Jinja2Templates(directory="Frontend/templates/cliente")
 
 # Ruta principal
 @route.get("/home/", response_class=HTMLResponse)

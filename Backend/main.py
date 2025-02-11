@@ -7,7 +7,7 @@ from Backend.routes.cake_routes import route as cake_route
 from Backend.routes.home_routes import route as home_route
 from Backend.routes.products_routes import route as products_route
 from Backend.routes.profile_routes import route as profile_route
-from Backend.routes.b2_routes import route as b2_route
+from Backend.routes.order_routes import route as order_route
 
 from fastapi.staticfiles import StaticFiles
 import os
@@ -41,7 +41,7 @@ app.include_router(cake_route)
 app.include_router(profile_route)
 app.include_router(products_route)
 app.include_router(register_route)
-app.include_router(b2_route)
+app.include_router(order_route)
 
 
 

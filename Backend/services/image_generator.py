@@ -5,21 +5,35 @@ from Backend.schemas.schema_cake import cakeDataRequest
 from Backend.utils.config import API_URL,API_KEY
 from fastapi import HTTPException
 import time
-
+from googletrans import Translator
+ 
 async def generate_cake_image(request: cakeDataRequest):
-    prompt = (          f"Un pastel con la siguiente descripción:\n"
-                        f"Temática: {request.tematica}\n"
-                        f"Sabor: {request.cake_type}\n"
-                        f"Tamaño: {request.cake_size}\n"
-                        f"Decoración: {request.decoration}\n"
-                        f"Mensaje en el pastel: {request.message}\n"
-                         "Por favor, crea una imagen que represente este pastel."
-             )
+    # Traducir los campos antes de construir el prompt
+    tematica_en = traducir_a_ingles(request.tematica)
+    cake_type_en = traducir_a_ingles(request.cake_type)
+    cake_shape_en = traducir_a_ingles(request.cake_shape)
+    cake_size_en = traducir_a_ingles(request.cake_size)
+    decoration_en = traducir_a_ingles(request.decoration)
+    message_en = traducir_a_ingles(request.message)
+
+     # Ahora construimos el prompt en inglés
+    prompt = (
+                f"Generate an image of a cake with the following characteristics:\n"
+                f"- Theme: {tematica_en} (e.g., birthday party, wedding, Christmas, Dragon Ball Z kids party, etc.)\n"
+                f"- Flavor: {cake_type_en} (e.g., vanilla, chocolate, strawberry, vanilla with caramel filling, etc.)\n"
+                f"- Shape: {cake_shape_en} (e.g., round, square, heart-shaped, etc.)\n"
+                f"- Size: {cake_size_en} (e.g., large, medium, small, multi-layered, for 200 people (this means it's a large cake or it can be several cakes with the same design, emphasizing that it serves 200 people), etc.)\n"
+                f"- Decoration: {decoration_en} (e.g., flowers, figures, colored icing, fruits, character figures, etc.)\n"
+                f"- Message: {message_en} (e.g., Happy Birthday, Congratulations, etc.)\n"
+                "Please create an image of a cake that reflects all these characteristics clearly and in detail, and keep in mind that everything is edible."
+)
+
+
 
     payload = {
         "prompt": prompt,
         #Nombre del modelo:
-        "modelId": "6bef9f1b-29cb-40c7-b9df-32b51c1f67d3", 
+        "modelId": "de7d3faf-762f-48e0-b3b7-9d0ac3a3fcf3", 
         "width": 512,
         "height": 512,
     }
@@ -89,3 +103,11 @@ async def check_status(generation_id: str):
         raise HTTPException(status_code=500, detail="No se encontraron URLs de imágenes generadas.")
 
     return {"generated_images": [{"url": url} for url in image_urls]}
+
+
+
+# Función para traducir a inglés
+def traducir_a_ingles(texto: str) -> str:
+    translator = Translator()
+    traduccion = translator.translate(texto, src='es', dest='en')
+    return traduccion.text
