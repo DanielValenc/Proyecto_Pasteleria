@@ -1,6 +1,6 @@
 
 from fastapi import APIRouter, Depends, Request, Form
-from fastapi.responses import HTMLResponse, JSONResponse, RedirectResponse
+from fastapi.responses import HTMLResponse, JSONResponse
 from fastapi.templating import Jinja2Templates
 from sqlalchemy.orm import Session
 from Backend.db.database import get_db

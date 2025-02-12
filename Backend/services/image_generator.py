@@ -1,5 +1,4 @@
-from io import BytesIO
-from fastapi.responses import StreamingResponse
+
 import httpx
 from Backend.schemas.schema_cake import cakeDataRequest
 from Backend.utils.config import API_URL,API_KEY
@@ -19,13 +18,14 @@ async def generate_cake_image(request: cakeDataRequest):
      # Ahora construimos el prompt en inglés
     prompt = (
                 f"Generate an image of a cake with the following characteristics:\n"
-                f"- Theme: {tematica_en} (e.g., birthday party, wedding, Christmas, Dragon Ball Z kids party, etc.)\n"
-                f"- Flavor: {cake_type_en} (e.g., vanilla, chocolate, strawberry, vanilla with caramel filling, etc.)\n"
-                f"- Shape: {cake_shape_en} (e.g., round, square, heart-shaped, etc.)\n"
-                f"- Size: {cake_size_en} (e.g., large, medium, small, multi-layered, for 200 people (this means it's a large cake or it can be several cakes with the same design, emphasizing that it serves 200 people), etc.)\n"
-                f"- Decoration: {decoration_en} (e.g., flowers, figures, colored icing, fruits, character figures, etc.)\n"
-                f"- Message: {message_en} (e.g., Happy Birthday, Congratulations, etc.)\n"
-                "Please create an image of a cake that reflects all these characteristics clearly and in detail, and keep in mind that everything is edible."
+                f"- Theme: {tematica_en} (e.g., Safari kids party, Elegant wedding, Unicorn kids party, etc.)\n"
+                f"- Shape: {cake_shape_en} (e.g., heart, round, square, etc.)\n"
+                f"- Flavor and filling: {cake_type_en} (e.g., Vanilla with strawberry cream, Chocolate with strawberry cream filling, etc.)\n"
+                f"- Size: {cake_size_en} (e.g., 1 level, 15 servings; 2 levels, 30 servings, etc.)\n"
+                f"- Decoration: {decoration_en} (e.g., Golden pearls and fondant flowers, White chocolate decoration with fresh fruits, etc.)\n"
+                f"- Message: {message_en} (e.g., Happy birthday Lily, Congratulations, My baptism, etc.)\n"
+                "Please create an image of the cake that clearly and thoroughly reflects all these characteristics, "
+                "and make sure everything depicted is edible."
 )
 
 
@@ -108,6 +108,10 @@ async def check_status(generation_id: str):
 
 # Función para traducir a inglés
 def traducir_a_ingles(texto: str) -> str:
+    # Si el mensaje es None o está vacío, retorna un valor predeterminado (puedes ponerlo vacío o cualquier valor).
+    if not texto:
+        return ""  # Retorna vacío si no hay mensaje.
+    
     translator = Translator()
     traduccion = translator.translate(texto, src='es', dest='en')
     return traduccion.text

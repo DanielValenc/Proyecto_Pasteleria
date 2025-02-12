@@ -1,4 +1,4 @@
-<!-- templates/home.html -->
+
 {% extends "nav_cliente.html" %}
 
 {% block head %}
@@ -9,14 +9,13 @@
 {% block content %}
 
 
-    <!-- Enlace a una página -->
-
+   
     <div class="container">
       <label class="tituloForm">Diseñemos tu pastel</label>
       <form action="/generate/" method="POST" class="cakeForm" id="cakeForm">
 
         <div class="section">
-            <label class="labelForm">¿Qué temática te gustaría para el diseño de tu pastel?</label>
+            <label class="">¿Qué temática te gustaría para el diseño de tu pastel?</label>
             <input type="text" id="tematica" name="tematica" placeholder="Ej. Safari fiesta infantil, Boda elegante, Unicornio fiesta infantil" required>
         </div>
 
@@ -27,26 +26,26 @@
           <!-- Sección de Sabor -->
           <div class="section">
             <label for="cake-type">¿Qué sabor y relleno deseas para tu pastel?</label>
-            <input type="text" id="cake-type" name="cake_type" placeholder="Ej. Vainilla con crema de fresa,Chocolatecon crema de Fresa" required>
+            <input type="text" id="cake-type" name="cake_type" placeholder="Ej. Vainilla con crema de fresa,Chocolate con relleno de crema de Fresa" required>
               </div>
           
   
           <!-- Sección de Forma del pastel -->
           <div class="section">
-            <label for="cake-size">¿Qué tamaño de pastel prefieres según el número de invitados?</label>
-            <input type="text" id="cake-size" name="cake_size" placeholder="Ej. Pequeño, Mediano para 10 personas, Grande" required>
+            <label for="cake-size">¿Cuántos niveles y porciones te gustaría para tu pastel?</label>
+            <input type="text" id="cake-size" name="cake_size" placeholder="Ej. 1 nivel, 15 porciones  ; 2 niveles, 30 porciones " required>
               </div>
           
   
           <!-- Sección de Porciones -->
           <div class="section">
             <label for="decoration">¿Cómo te gustaría que decoráramos tu pastel?</label>
-            <input type="text" id="decoration" name="decoration" placeholder="Ej.  Flores naturales y glaseado rosa,Chispas de Chocolate" required>
+            <input type="text" id="decoration" name="decoration" placeholder="Ej.  Perlas doradas y flores de fondant, Decoración con chocolate blanco y frutas frescas" required>
           </div>
 
           <div class="section">
-            <label for="decoration">¿Que frase corta, deseas en tu pastel?</label>
-            <input type="text" id="message" name="message" placeholder="Ej.  Feliz cumpleaños Lily, Felicidades" required>
+            <label for="decoration">¿Qué frase corta, deseas en tu pastel?</label>
+            <input type="text" id="message" name="message" placeholder="Ej.  Feliz cumpleaños Lily, Felicidades, Mi bautizo" required>
           </div>
   
               
@@ -56,7 +55,7 @@
   
           <!-- Botón de enviar -->
           <div class="section">
-              <button type="button" onclick="generateCake()" class="opciones">Generar Pastel</button>
+              <button type="button" onclick="generateCake()" class="btnG">Generar Pastel</button>
           </div>
       </form>
 
@@ -70,7 +69,7 @@
         </div>
         <!-- Campo oculto para almacenar la imagen seleccionada -->
         <input type="hidden" name="imagenSeleccionada" id="imagenSeleccionada">
-        <button onclick="closePopup()">Cerrar</button>
+       
         <!-- Este botón de enviar solo se activará después de que se seleccione una imagen -->
         <button id="submitOrderButton"  type="submit"  disabled>Enviar Orden</button>
     </div>

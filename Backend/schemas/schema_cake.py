@@ -6,7 +6,7 @@ class cakeDataRequest(BaseModel):
     cake_shape:str
     cake_size: str
     decoration: str
-    message:str
+    message:str = None
     
     
   

@@ -1,5 +1,5 @@
 from fastapi.templating import Jinja2Templates
-from fastapi.responses import HTMLResponse, JSONResponse, RedirectResponse
+from fastapi.responses import HTMLResponse, JSONResponse
 from fastapi import  Depends, Form, Request 
 from fastapi import APIRouter
 from pydantic import EmailStr

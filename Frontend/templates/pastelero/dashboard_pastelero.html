@@ -1,24 +1,41 @@
-<!-- templates/home.html -->
+
+
 {% extends "nav_pastelero.html" %}
 
+{% block head %}
+    <link rel="stylesheet" href="/static/styles/style_pastelero.css">
+    <script src="/static/scripts/scripts_pastelero.js" defer></script>
+{% endblock %}
+
 {% block content %}
+    <h1>Pedidos Asignados</h1>
 
-    <h2>Pedidos Pendientes</h2>
-    <table>
-        <thead>
-            <tr>
-                <th>ID</th>
-                <th>Nombre del Pastel</th>
-                <th>Cliente</th>
-                <th>Estado</th>
-                <th>Acción</th>
-            </tr>
-        </thead>
-        <tbody>
-           
-        </tbody>
-    </table>
+    <ul id="pedidosList">
+        {% for pedido in pedidos %}
+            <li class="pedido-container">
+                <!-- Sección de información -->
+                <div class="pedido-info">
+                    <p><strong>Temática:</strong> {{ pedido.tematica }}</p>
+                    <p><strong>Tipo:</strong> {{ pedido.cake_type }}</p>
+                    <p><strong>Forma:</strong> {{ pedido.cake_shape }}</p>
+                    <p><strong>Tamaño:</strong> {{ pedido.cake_size }}</p>
+                    <p><strong>Decoración:</strong> {{ pedido.decoration }}</p>
+                    {% if pedido.message %}
+                        <p><strong>Mensaje:</strong> "{{ pedido.message }}"</p>
+                    {% endif %}
 
-    {% endblock %}
+                </div>
 
- 
+                <!-- Sección de imagen -->
+                <div class="pedido-imagen">
+                    {% if pedido.image_url %}
+                        <img src="{{ pedido.image_url }}" alt="Imagen del pedido">
+                    {% else %}
+                        <p>Imagen no disponible</p>
+                    {% endif %}
+                </div>
+            </li>
+        {% endfor %}
+    </ul>
+    
+{% endblock %}

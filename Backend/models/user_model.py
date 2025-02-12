@@ -1,6 +1,5 @@
-from sqlalchemy import Column, DateTime, ForeignKey, Integer, String
+from sqlalchemy import Column,  ForeignKey, Integer, String
 from Backend.db.database import Base
-from datetime import datetime
 from sqlalchemy.orm import relationship
 
 
@@ -20,15 +19,14 @@ class Pedido(Base):
     __tablename__ = "pedidos"
 
     id = Column(Integer, primary_key=True, index=True)
-    tematica = Column(String, nullable=False)
-    cake_type = Column(String, nullable=False)
-    cake_shape = Column(String, nullable=False)
-    cake_size = Column(String, nullable=False)
-    decoration = Column(String, nullable=False)
-    message = Column(String, nullable=True)
+    tematica = Column(String(255), nullable=False)
+    cake_type = Column(String(255), nullable=False)
+    cake_shape = Column(String(255), nullable=False)
+    cake_size = Column(String(255), nullable=False)
+    decoration = Column(String(255), nullable=False)
+    message = Column(String(255), nullable=True)
     pastelero_id = Column(Integer, ForeignKey("users.id"))  # Relación con la tabla 'users'
-    status = Column(String, default="Pendiente")  # Estado del pedido
-    image_url = Column(String, nullable=True)
+    image_url = Column(String(500), nullable=True)
 
     pastelero = relationship("UsersRequest", foreign_keys=[pastelero_id])  # Relación con 'UsersRequest'
 

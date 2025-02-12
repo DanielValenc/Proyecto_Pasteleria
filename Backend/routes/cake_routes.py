@@ -1,10 +1,7 @@
-from fastapi import APIRouter, Depends, HTTPException, Request
+from fastapi import APIRouter,  Request
 from fastapi.responses import HTMLResponse
-from requests import Session
-from Backend.db.database import get_db
-from Backend.models.user_model import Pedido
 from Backend.schemas.schema_cake import cakeDataRequest
-from Backend.services.image_generator import generate_cake_image, check_status
+from Backend.services.image_generator import generate_cake_image
 from fastapi.templating import Jinja2Templates
 
 route = APIRouter()
@@ -26,22 +23,3 @@ async def generate_cake(request: cakeDataRequest):
 
 
 
-@route.get("/check-status/{generation_id}")
-async def status_image(generation_id: str):
-    return await check_status(generation_id)
-
-
-@route.get("/pastelero/pedidos/")
-async def ver_pedidos(db: Session = Depends(get_db)):
-    pedidos = db.query(Pedido).filter(Pedido.status == "Pendiente").all()
-    return {"pedidos": pedidos}
-
-@route.post("/pastelero/aceptar_pedido/{pedido_id}")
-async def aceptar_pedido(pedido_id: int, pastelero_id: int, db: Session = Depends(get_db)):
-    pedido = db.query(Pedido).filter(Pedido.id == pedido_id).first()
-    if not pedido:
-        raise HTTPException(status_code=404, detail="Pedido no encontrado")
-    pedido.pastelero_id = pastelero_id
-    pedido.status = "En proceso"
-    db.commit()
-    return {"message": "Pedido aceptado"}

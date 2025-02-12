@@ -53,12 +53,12 @@ body#login, html {
     font-family: 'Slabo 27px', serif;
   }
 
-  .labelFLS{
-    font-size: 15px;
+  #labelFLS{
+    font-size: 20px;
     color: #3d0c08;
     font-family: 'Slabo 27px', serif;
   }
-
+  
   /* Cambiar el título */
 .swal-title {
   font-family: 'Slabo 27px', serif;/* Cambiar la fuente del título */

@@ -1,3 +1,4 @@
+
 function generateCake() {
     const tematica = document.getElementById('tematica').value;
     const cakeType = document.getElementById('cake-type').value;
@@ -16,7 +17,8 @@ function generateCake() {
         message:message
         
     };
-
+   
+    console.log("Datos a enviar:", data);
     fetch('/generate/', {
         method: 'POST',
         headers: {
@@ -24,7 +26,13 @@ function generateCake() {
         },
         body: JSON.stringify(data)
     })
-        .then(response => response.json())
+        .then(response => {
+            if (!response.ok) {
+                return response.json().then(err => { throw new Error(err.detail || 'Error en la solicitud'); });
+            }
+            return response.json();
+        })
+          
         .then(data => {
             console.log('Success:', data);
 
@@ -43,18 +51,15 @@ function generateCake() {
 }
 
 
-
-
 //**********FUNCION PARA ALMACENAR ORDEN*********** */
 
 // Agregar el evento al botón de enviar
 document.getElementById('submitOrderButton').addEventListener('click', handleSubmitForm);
+
 function handleSubmitForm(event) {
-    event.preventDefault(); // Para evitar el envío del formulario por defecto
+    event.preventDefault();
 
-    const selectedImage = document.getElementById('imagenSeleccionada').value; // Imagen seleccionada
-
-    // Si no se ha seleccionado una imagen, no enviar el formulario
+    const selectedImage = document.getElementById('imagenSeleccionada').value;
     if (!selectedImage) {
         alert("Por favor, selecciona una imagen.");
         return;
@@ -66,39 +71,56 @@ function handleSubmitForm(event) {
     const cakeSize = document.getElementById('cake-size').value;
     const decoration = document.getElementById('decoration').value;
     const message = document.getElementById('message').value;
+    
+    // Verificar que los campos obligatorios no estén vacíos
+    if (!tematica || !cakeType || !cakeShape || !cakeSize || !decoration) {
+        alert("Por favor, completa todos los campos obligatorios.");
+        return;
+    }
 
-    // Asignar un pastelero aleatorio
-    const pasteleroId = Math.floor(Math.random() * 1000) + 1; // ID aleatorio para el pastelero (esto puede cambiar según la lógica que uses)
+    // Obtener un pastelero aleatorio antes de enviar la orden
+    fetch('/pastelero-random/')
+        .then(response => response.json())
+        .then(data => {
+            if (data.error) {
+                alert("No hay pasteleros disponibles.");
+                return;
+            }
 
-    const data = {
-        tematica: tematica,
-        cake_type: cakeType,
-        cake_shape: cakeShape,
-        cake_size: cakeSize,
-        decoration: decoration,
-        message: message,
-        imagenSeleccionada: selectedImage,
-        pastelero_id: pasteleroId,
-        tiempo_espera: 5 // 5 minutos de espera
-    };
+            const pasteleroId = data.pastelero_id;
 
-    fetch('/guardarOrden/', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(data)
-    })
-    .then(response => response.json())
-    .then(data => {
-        console.log('Orden guardada con éxito:', data);
-        alert("¡Tu pedido ha sido realizado exitosamente!");
-    })
-    .catch((error) => {
-        console.error('Error al guardar la orden:', error);
-    });
+            const orderData = {
+                tematica: tematica,
+                cake_type: cakeType,
+                cake_shape: cakeShape,
+                cake_size: cakeSize,
+                decoration: decoration,
+                message: message,
+                image_url: selectedImage,
+                pastelero_id: pasteleroId,
+            };
+
+            console.log(orderData);  // Verifica los datos a enviar
+
+            // Enviar la orden con el pastelero asignado
+            return fetch('/guardarOrden/', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(orderData)
+            });
+        })
+        .then(response => response.json())
+        .then(data => {
+            console.log('Orden guardada con éxito:', data);
+            alert("¡Tu pedido ha sido realizado exitosamente! Pronto se comunicarán contigo");
+        })
+        .catch((error) => {
+            console.error('Error al guardar la orden:', error);
+            alert('Hubo un error al guardar la orden. Intenta nuevamente más tarde.');
+        });
 }
-
 
 
 
@@ -120,7 +142,6 @@ function selectImage(url, imgElement) {
     // Habilitar el botón de enviar solo después de seleccionar una imagen
     document.getElementById("submitOrderButton").disabled = false;
 }
-
 
 // Modificar la función para mostrar imágenes y agregar eventos de selección
 function showImagesPopup(imageUrls) {
